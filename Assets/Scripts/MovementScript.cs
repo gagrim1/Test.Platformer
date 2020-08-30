@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class MovementScript : MonoBehaviour
@@ -8,6 +9,10 @@ public class MovementScript : MonoBehaviour
 
     [SerializeField]
     private LayerMask platformMask;
+    [SerializeField]
+    private LayerMask wallMask;
+
+    private string prevWall = "";
     private Rigidbody2D playerRB;
     private BoxCollider2D playerBC;
     private SpriteRenderer spriteRenderer;
@@ -36,6 +41,7 @@ public class MovementScript : MonoBehaviour
         {
             countJump = 0;
             animator.SetTrigger("Grounded");
+            prevWall = "";
         }
         else {
             animator.SetTrigger("Jump");
@@ -46,34 +52,50 @@ public class MovementScript : MonoBehaviour
 
     void jumpController()
     {
-        if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)))
+        float jumpVelocity = 35f;
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)))
         {
             if (isGrounded())
             {
-                float jumpVelocity = 35f;
                 playerRB.velocity = Vector2.up * jumpVelocity;
             }
-            else {
-                if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))) {
-                    if (countJump < countJumpMax) {
-                        float jumpVelocity = 30f;
-                        playerRB.velocity = Vector2.up * jumpVelocity;
-                        countJump++;
-                    }
-                }
+            else
+            if (isOnWall())
+            {
+                playerRB.velocity = Vector2.up * jumpVelocity;
+            }
+            else
+            if (countJump < countJumpMax)
+            {
+                playerRB.velocity = new Vector2(playerRB.velocity.x, jumpVelocity);
+                countJump++;
             }
         }
     }
 
     void flip() {
         Vector2 charScale = transform.localScale;
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
             charScale.x = -2;
         }
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
             charScale.x = 2;
         }
         transform.localScale = charScale;
+    }
+    
+    bool isOnWall()
+    {
+        RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, new Vector2(playerBC.bounds.size.x*1.25f, playerBC.bounds.size.y*0.9f), 0f, Vector2.down, 0f, wallMask);
+        if (hit.collider != null)
+            if (prevWall != hit.collider.gameObject.name) {
+                prevWall = hit.collider.gameObject.name;
+            }
+            else
+            {
+                return false;
+            }
+        return hit.collider != null;
     }
 
     void movementController()
