@@ -17,15 +17,21 @@ public class MovementScript : MonoBehaviour
     private BoxCollider2D playerBC;
     private SpriteRenderer spriteRenderer;
 
-    private int countJump;
-    private int countJumpMax;
+    private int jumpCount;
+    private int dashCount;
+    private int maxJumpCount;
+    private int maxDashCount;
+    [SerializeField]
+    private float scale = 2;
+    private bool inDash = false;
 
     private void Start()
     {
         playerBC = transform.GetComponent<BoxCollider2D>();
         playerRB = transform.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        countJumpMax = 1;
+        maxJumpCount = 1;
+        maxDashCount = 1;
     }
 
     private bool isGrounded()
@@ -39,7 +45,8 @@ public class MovementScript : MonoBehaviour
         flip();
         if (isGrounded())
         {
-            countJump = 0;
+            jumpCount = 0;
+            dashCount = 0;
             animator.SetTrigger("Grounded");
             prevWall = "";
         }
@@ -53,6 +60,7 @@ public class MovementScript : MonoBehaviour
     void jumpController()
     {
         float jumpVelocity = 35f;
+        float dashVelocity = 45f;
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)))
         {
             if (isGrounded())
@@ -65,10 +73,26 @@ public class MovementScript : MonoBehaviour
                 playerRB.velocity = Vector2.up * jumpVelocity;
             }
             else
-            if (countJump < countJumpMax)
+            if (jumpCount < maxJumpCount)
             {
                 playerRB.velocity = new Vector2(playerRB.velocity.x, jumpVelocity);
-                countJump++;
+                jumpCount++;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Q))
+        {
+            if (isGrounded())
+            {
+                StartCoroutine(stayInDash());
+                playerRB.velocity = new Vector2(-transform.localScale.x/scale,0) * dashVelocity;
+            }
+            else
+            if (dashCount < maxDashCount)
+            {
+                StartCoroutine(stayInDash());
+                playerRB.velocity = new Vector2(-transform.localScale.x / scale, 0) * dashVelocity;
+                dashCount++;
             }
         }
     }
@@ -76,10 +100,10 @@ public class MovementScript : MonoBehaviour
     void flip() {
         Vector2 charScale = transform.localScale;
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
-            charScale.x = -2;
+            charScale.x = -scale;
         }
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-            charScale.x = 2;
+            charScale.x = scale;
         }
         transform.localScale = charScale;
     }
@@ -101,7 +125,7 @@ public class MovementScript : MonoBehaviour
     void movementController()
     {
         float moveSpeed = 20f;
-
+        if(!inDash)
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             if (isGrounded())
@@ -135,6 +159,21 @@ public class MovementScript : MonoBehaviour
                 playerRB.velocity = new Vector2(0, playerRB.velocity.y);
                 animator.SetInteger("AnimState", 0);
             }
+        }
+    }
+
+    IEnumerator stayInDash()
+    {
+        if (!inDash)
+        {
+            float gravity = playerRB.gravityScale;
+            playerRB.gravityScale = 0f;
+            inDash = true;
+            Debug.Log("started");
+            yield return new WaitForSeconds(0.15f);
+            Debug.Log("ended");
+            inDash = false;
+            playerRB.gravityScale = gravity;
         }
     }
 }
