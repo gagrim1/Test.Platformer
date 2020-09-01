@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MovementScript : MonoBehaviour
 {
-    Animator animator;
+    private Animator animator;
 
     [SerializeField]
     private LayerMask platformMask;
@@ -20,12 +20,16 @@ public class MovementScript : MonoBehaviour
     private int countJump;
     private int countJumpMax;
 
-    private void Start()
+    private void Awake()
     {
         playerBC = transform.GetComponent<BoxCollider2D>();
         playerRB = transform.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         countJumpMax = 1;
+    }
+    private void Start()
+    {
+
     }
 
     private bool isGrounded()
@@ -136,5 +140,9 @@ public class MovementScript : MonoBehaviour
                 animator.SetInteger("AnimState", 0);
             }
         }
+    }
+    public Animator GetAnimator() 
+    {
+        return animator;
     }
 }
