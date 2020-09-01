@@ -54,13 +54,13 @@ public class MovementScript : MonoBehaviour
             animator.SetTrigger("Jump");
         }
         jumpController();
+        dashController();
         movementController();
     }
 
     void jumpController()
     {
         float jumpVelocity = 35f;
-        float dashVelocity = 45f;
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)))
         {
             if (isGrounded())
@@ -68,24 +68,41 @@ public class MovementScript : MonoBehaviour
                 playerRB.velocity = Vector2.up * jumpVelocity;
             }
             else
-            if (isOnWall())
-            {
-                playerRB.velocity = Vector2.up * jumpVelocity;
-            }
-            else
-            if (jumpCount < maxJumpCount)
+            if (jumpCount < maxJumpCount&&!isWallJump())
             {
                 playerRB.velocity = new Vector2(playerRB.velocity.x, jumpVelocity);
                 jumpCount++;
             }
         }
 
+    }
+
+    bool isWallJump()
+    {
+        float jumpVelocity = 35f;
+        if (isOnRightWall())
+        {
+            playerRB.velocity = Vector2.up * jumpVelocity + Vector2.left * jumpVelocity / 2;
+            return true;
+        }
+        else
+        if (isOnLeftWall())
+        {
+            playerRB.velocity = Vector2.up * jumpVelocity + Vector2.right * jumpVelocity / 2;
+            return true;
+        }
+        return false;
+    }
+
+    void dashController()
+    {
+        float dashVelocity = 45f;
         if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Q))
         {
             if (isGrounded())
             {
                 StartCoroutine(stayInDash());
-                playerRB.velocity = new Vector2(-transform.localScale.x/scale,0) * dashVelocity;
+                playerRB.velocity = new Vector2(-transform.localScale.x / scale, 0) * dashVelocity;
             }
             else
             if (dashCount < maxDashCount)
@@ -108,11 +125,25 @@ public class MovementScript : MonoBehaviour
         transform.localScale = charScale;
     }
     
-    bool isOnWall()
+    bool isOnRightWall()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, new Vector2(playerBC.bounds.size.x*1.25f, playerBC.bounds.size.y*0.9f), 0f, Vector2.down, 0f, wallMask);
+        RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, playerBC.bounds.size, 0f, Vector2.right, 0.5f, wallMask);
         if (hit.collider != null)
             if (prevWall != hit.collider.gameObject.name) {
+                prevWall = hit.collider.gameObject.name;
+            }
+            else
+            {
+                return false;
+            }
+        return hit.collider != null;
+    }
+    bool isOnLeftWall()
+    {
+        RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, playerBC.bounds.size, 0f, Vector2.left, 0.5f, wallMask);
+        if (hit.collider != null)
+            if (prevWall != hit.collider.gameObject.name)
+            {
                 prevWall = hit.collider.gameObject.name;
             }
             else
@@ -156,7 +187,10 @@ public class MovementScript : MonoBehaviour
             }
             else
             {
-                playerRB.velocity = new Vector2(0, playerRB.velocity.y);
+                if (isGrounded())
+                {
+                    playerRB.velocity = new Vector2(0, playerRB.velocity.y);
+                }
                 animator.SetInteger("AnimState", 0);
             }
         }
