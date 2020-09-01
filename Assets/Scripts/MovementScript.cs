@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MovementScript : MonoBehaviour
 {
-    Animator animator;
+    private Animator animator;
 
     [SerializeField]
     private LayerMask platformMask;
@@ -25,13 +25,17 @@ public class MovementScript : MonoBehaviour
     private float scale = 2;
     private bool inDash = false;
 
-    private void Start()
+    private void Awake()
     {
         playerBC = transform.GetComponent<BoxCollider2D>();
         playerRB = transform.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         maxJumpCount = 1;
         maxDashCount = 1;
+    }
+    private void Start()
+    {
+
     }
 
     private bool isGrounded()
@@ -195,7 +199,6 @@ public class MovementScript : MonoBehaviour
             }
         }
     }
-
     IEnumerator stayInDash()
     {
         if (!inDash)
