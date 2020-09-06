@@ -24,6 +24,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField]
     private float scale = 2;
     private bool inDash = false;
+    private bool inWallJump = false;
 
     private void Awake()
     {
@@ -42,7 +43,8 @@ public class MovementScript : MonoBehaviour
 
     public void jumpController()
     {
-        float jumpVelocity = 35f;
+        float jumpVelocity = 35f; 
+        if(!Input.GetKey(KeyCode.S))
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)))
         {
             if (isGrounded())
@@ -64,15 +66,18 @@ public class MovementScript : MonoBehaviour
         float jumpVelocity = 35f;
         if (isOnRightWall())
         {
+            inWallJump = true;
             playerRB.velocity = Vector2.up * jumpVelocity + Vector2.left * jumpVelocity / 2;
             return true;
         }
         else
         if (isOnLeftWall())
         {
+            inWallJump = true;
             playerRB.velocity = Vector2.up * jumpVelocity + Vector2.right * jumpVelocity / 2;
             return true;
         }
+        inWallJump = false;
         return false;
     }
 
@@ -138,7 +143,6 @@ public class MovementScript : MonoBehaviour
     public void movementController()
     {
         float moveSpeed = 20f;
-        if(!inDash)
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             if (isGrounded())
@@ -169,7 +173,7 @@ public class MovementScript : MonoBehaviour
             }
             else
             {
-                if (isGrounded())
+                if (!inDash&&!inWallJump)
                 {
                     playerRB.velocity = new Vector2(0, playerRB.velocity.y);
                 }
