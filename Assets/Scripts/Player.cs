@@ -25,8 +25,8 @@ public class Player : MonoBehaviour
     {
         if (healthSystem.GetHealthAmount() > 0)
         {
-            moove.flip();
-            if (moove.isGrounded())
+            moove.Flip();
+            if (moove.IsGrounded())
             {
                 moove.SetJumpCount(0);
                 moove.SetDashCount(0);
@@ -36,9 +36,9 @@ public class Player : MonoBehaviour
             {
                 animator.SetTrigger("Jump");
             }
-            moove.jumpController();
-            moove.dashController();
-            moove.movementController();
+            moove.JumpController();
+            moove.DashController();
+            moove.MovementController();
         }
 
         if (Input.GetKeyDown(KeyCode.L))

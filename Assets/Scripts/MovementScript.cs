@@ -23,7 +23,6 @@ public class MovementScript : MonoBehaviour
     [SerializeField]
     private float scale = 2;
     private bool inDash = false;
-    private bool inWallJump = false;
 
     private void Awake()
     {
@@ -34,153 +33,110 @@ public class MovementScript : MonoBehaviour
         maxDashCount = 1;
     }
 
-    public bool isGrounded()
+    public bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, playerBC.bounds.size, 0f, Vector2.down, 1f, platformMask);
         return hit.collider != null;
     }
 
-    public void jumpController()
-    {
-        float jumpVelocity = 35f; 
-        if(!Input.GetKey(KeyCode.S))
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)))
-        {
-            if (isGrounded())
-            {
-                playerRB.velocity = Vector2.up * jumpVelocity;
-            }
-            else
-            if (jumpCount < maxJumpCount&&!isWallJump())
-            {
-                playerRB.velocity = new Vector2(playerRB.velocity.x, jumpVelocity);
-                jumpCount++;
-            }
-        }
-
-    }
-
-    public bool isWallJump()
+    public void JumpController()
     {
         float jumpVelocity = 35f;
-        if (isOnRightWall())
-        {
-            inWallJump = true;
-            playerRB.velocity = Vector2.up * jumpVelocity + Vector2.left * jumpVelocity / 2;
-            return true;
-        }
-        else
-        if (isOnLeftWall())
-        {
-            inWallJump = true;
-            playerRB.velocity = Vector2.up * jumpVelocity + Vector2.right * jumpVelocity / 2;
-            return true;
-        }
-        inWallJump = false;
-        return false;
+        if (!Input.GetKey(KeyCode.S))
+            if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)))
+            {
+                if (IsGrounded())
+                {
+                    playerRB.velocity = Vector2.up * jumpVelocity;
+                }
+                else
+                if (jumpCount < maxJumpCount && !IsWallJump())
+                {
+                    playerRB.velocity = new Vector2(playerRB.velocity.x, jumpVelocity);
+                    jumpCount++;
+                }
+            }
+
     }
 
-    public void dashController()
+    public bool IsWallJump()
+    {
+        float jumpVelocity = 35f;
+
+        RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, playerBC.bounds.size, 0f, Vector2.right, 0.5f, wallMask);
+        if (hit.collider != null)
+            if (prevWall != hit.collider.gameObject.name)
+            {
+                playerRB.velocity = Vector2.up * jumpVelocity + Vector2.left * jumpVelocity / 2;
+                prevWall = hit.collider.gameObject.name;
+            }
+            else
+            {
+                return false;
+            }
+        return hit.collider != null;
+    }
+
+    public void DashController()
     {
         float dashVelocity = 45f;
         if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Q))
         {
-            if (isGrounded())
+            if (IsGrounded())
             {
-                StartCoroutine(stayInDash());
+                StartCoroutine(StayInDash());
                 playerRB.velocity = new Vector2(-transform.localScale.x / scale, 0) * dashVelocity;
             }
             else
             if (dashCount < maxDashCount)
             {
-                StartCoroutine(stayInDash());
+                StartCoroutine(StayInDash());
                 playerRB.velocity = new Vector2(-transform.localScale.x / scale, 0) * dashVelocity;
                 dashCount++;
             }
         }
     }
 
-    public void flip() {
+    public void Flip()
+    {
         Vector2 charScale = transform.localScale;
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
             charScale.x = -scale;
         }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
             charScale.x = scale;
         }
         transform.localScale = charScale;
     }
-    
-    public bool isOnRightWall()
-    {
-        RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, playerBC.bounds.size, 0f, Vector2.right, 0.5f, wallMask);
-        if (hit.collider != null)
-            if (prevWall != hit.collider.gameObject.name) {
-                prevWall = hit.collider.gameObject.name;
-            }
-            else
-            {
-                return false;
-            }
-        return hit.collider != null;
-    }
-    public bool isOnLeftWall()
-    {
-        RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, playerBC.bounds.size, 0f, Vector2.left, 0.5f, wallMask);
-        if (hit.collider != null)
-            if (prevWall != hit.collider.gameObject.name)
-            {
-                prevWall = hit.collider.gameObject.name;
-            }
-            else
-            {
-                return false;
-            }
-        return hit.collider != null;
-    }
 
-    public void movementController()
+    public void MovementController()
     {
         float moveSpeed = 20f;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (!inDash)
         {
-            if (isGrounded())
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
                 playerRB.velocity = new Vector2(-moveSpeed, playerRB.velocity.y);
                 animator.SetInteger("AnimState", 2);
             }
-            else {
-                float midAirControl = 3f;
-                playerRB.velocity += new Vector2(-moveSpeed * midAirControl * Time.deltaTime, 0);
-                playerRB.velocity = new Vector2(Mathf.Clamp(playerRB.velocity.x, -moveSpeed, +moveSpeed), playerRB.velocity.y);
-            }
-        }
-        else
-        {
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            else
             {
-                if (isGrounded())
+                if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
                 {
                     playerRB.velocity = new Vector2(+moveSpeed, playerRB.velocity.y);
                     animator.SetInteger("AnimState", 2);
                 }
-                else {
-                    float midAirControl = 3f;
-                    playerRB.velocity += new Vector2(+moveSpeed * midAirControl * Time.deltaTime, 0);
-                    playerRB.velocity = new Vector2(Mathf.Clamp(playerRB.velocity.x, -moveSpeed, +moveSpeed), playerRB.velocity.y);
-                }
-            }
-            else
-            {
-                if (!inDash&&!inWallJump)
+                else
                 {
                     playerRB.velocity = new Vector2(0, playerRB.velocity.y);
+                    animator.SetInteger("AnimState", 0);
                 }
-                animator.SetInteger("AnimState", 0);
             }
         }
     }
-    IEnumerator stayInDash()
+    IEnumerator StayInDash()
     {
         if (!inDash)
         {
@@ -196,7 +152,7 @@ public class MovementScript : MonoBehaviour
     }
 
     //Getters and setters
-    public int GetJumpCount() 
+    public int GetJumpCount()
     {
         return jumpCount;
     }
@@ -228,7 +184,7 @@ public class MovementScript : MonoBehaviour
     {
         return maxDashCount;
     }
-    
+
     public void SetMaxDashCount(int maxDashCount)
     {
         this.maxDashCount = maxDashCount;
