@@ -32,9 +32,9 @@ public class HealthBar : MonoBehaviour
         {
             healthSystem.Heal(10);
         }
-        if (healthSystem.GetHealthAmount() == 0)
+        //if (healthSystem.GetHealthAmount() == 0)
         {
-
+        //    Debug.Log("dead");
         }
     }
 
