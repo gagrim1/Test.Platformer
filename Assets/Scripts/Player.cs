@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
         if (healthSystem.GetHealthAmount() == 0)
         {
             animator.SetTrigger("Death");
+            moove.StopMooving();
         }
 }
 }

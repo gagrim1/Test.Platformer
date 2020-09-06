@@ -15,7 +15,6 @@ public class MovementScript : MonoBehaviour
     private string prevWall = "";
     private Rigidbody2D playerRB;
     private BoxCollider2D playerBC;
-    private SpriteRenderer spriteRenderer;
 
     private int jumpCount;
     private int dashCount;
@@ -233,5 +232,10 @@ public class MovementScript : MonoBehaviour
     public void SetMaxDashCount(int maxDashCount)
     {
         this.maxDashCount = maxDashCount;
+    }
+
+    public void StopMooving()
+    {
+        playerRB.velocity = new Vector2(0, playerRB.velocity.y);
     }
 }
