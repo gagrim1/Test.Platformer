@@ -143,9 +143,7 @@ public class MovementScript : MonoBehaviour
             float gravity = playerRB.gravityScale;
             playerRB.gravityScale = 0f;
             inDash = true;
-            Debug.Log("started");
             yield return new WaitForSeconds(0.15f);
-            Debug.Log("ended");
             inDash = false;
             playerRB.gravityScale = gravity;
         }
