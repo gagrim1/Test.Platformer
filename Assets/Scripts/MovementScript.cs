@@ -33,36 +33,14 @@ public class MovementScript : MonoBehaviour
         maxJumpCount = 1;
         maxDashCount = 1;
     }
-    private void Start()
-    {
 
-    }
-
-    private bool isGrounded()
+    public bool isGrounded()
     {
         RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, playerBC.bounds.size, 0f, Vector2.down, 1f, platformMask);
         return hit.collider != null;
     }
 
-    void Update()
-    {
-        flip();
-        if (isGrounded())
-        {
-            jumpCount = 0;
-            dashCount = 0;
-            animator.SetTrigger("Grounded");
-            prevWall = "";
-        }
-        else {
-            animator.SetTrigger("Jump");
-        }
-        jumpController();
-        dashController();
-        movementController();
-    }
-
-    void jumpController()
+    public void jumpController()
     {
         float jumpVelocity = 35f;
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)))
@@ -81,7 +59,7 @@ public class MovementScript : MonoBehaviour
 
     }
 
-    bool isWallJump()
+    public bool isWallJump()
     {
         float jumpVelocity = 35f;
         if (isOnRightWall())
@@ -98,7 +76,7 @@ public class MovementScript : MonoBehaviour
         return false;
     }
 
-    void dashController()
+    public void dashController()
     {
         float dashVelocity = 45f;
         if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Q))
@@ -118,7 +96,7 @@ public class MovementScript : MonoBehaviour
         }
     }
 
-    void flip() {
+    public void flip() {
         Vector2 charScale = transform.localScale;
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
             charScale.x = -scale;
@@ -129,7 +107,7 @@ public class MovementScript : MonoBehaviour
         transform.localScale = charScale;
     }
     
-    bool isOnRightWall()
+    public bool isOnRightWall()
     {
         RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, playerBC.bounds.size, 0f, Vector2.right, 0.5f, wallMask);
         if (hit.collider != null)
@@ -142,7 +120,7 @@ public class MovementScript : MonoBehaviour
             }
         return hit.collider != null;
     }
-    bool isOnLeftWall()
+    public bool isOnLeftWall()
     {
         RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, playerBC.bounds.size, 0f, Vector2.left, 0.5f, wallMask);
         if (hit.collider != null)
@@ -157,7 +135,7 @@ public class MovementScript : MonoBehaviour
         return hit.collider != null;
     }
 
-    void movementController()
+    public void movementController()
     {
         float moveSpeed = 20f;
         if(!inDash)
@@ -212,5 +190,44 @@ public class MovementScript : MonoBehaviour
             inDash = false;
             playerRB.gravityScale = gravity;
         }
+    }
+
+    //Getters and setters
+    public int GetJumpCount() 
+    {
+        return jumpCount;
+    }
+
+    public void SetJumpCount(int jumpCount)
+    {
+        this.jumpCount = jumpCount;
+    }
+
+    public int GetDashCount()
+    {
+        return dashCount;
+    }
+
+    public void SetDashCount(int dashCount)
+    {
+        this.dashCount = dashCount;
+    }
+    public int GetMaxJumpCount()
+    {
+        return maxJumpCount;
+    }
+
+    public void SetMaxJumpCount(int maxJumpCount)
+    {
+        this.maxJumpCount = maxJumpCount;
+    }
+    public int GetMaxDashCount()
+    {
+        return maxDashCount;
+    }
+    
+    public void SetMaxDashCount(int maxDashCount)
+    {
+        this.maxDashCount = maxDashCount;
     }
 }
