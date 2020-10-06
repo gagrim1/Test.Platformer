@@ -7,6 +7,7 @@ public class HealthBar : MonoBehaviour
 {
     private Image barImage;
     private HealthSystem healthSystem;
+    private Database database;
     [SerializeField]private GameObject player;
 
     private void Awake()
@@ -50,5 +51,10 @@ public class HealthBar : MonoBehaviour
     public float GetHealthSystem()
     {
         return healthSystem.GetHealthNormalized();
+    }
+
+    public void GetDamage(int damage)
+    {
+        healthSystem.Damage(damage);
     }
 }

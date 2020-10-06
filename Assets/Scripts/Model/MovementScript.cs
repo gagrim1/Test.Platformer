@@ -13,7 +13,7 @@ public class MovementScript : MonoBehaviour
     private LayerMask wallMask;
 
     private string prevWall = "";
-    private Rigidbody2D playerRB;
+    public Rigidbody2D playerRB;
     private BoxCollider2D playerBC;
 
     private int jumpCount;

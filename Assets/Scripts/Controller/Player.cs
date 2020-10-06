@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
     private HealthSystem healthSystem;
     private Animator animator;
     private MovementScript moove;
+    private GameObject player;
 
     private void Awake()
     {
@@ -15,10 +17,10 @@ public class Player : MonoBehaviour
         moove = GetComponent<MovementScript>();
         moove.SetMaxDashCount(1);
         moove.SetMaxJumpCount(1);
+        healthSystem = new HealthSystem(100);
     }
     void Start()
     {
-        healthSystem = new HealthSystem(100);
        
     }
     void Update()
@@ -43,7 +45,8 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            healthSystem.Damage(10);
+            //healthSystem.Damage(10);
+            GetDamage(10);
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
@@ -55,4 +58,21 @@ public class Player : MonoBehaviour
             moove.StopMooving();
         }
 }
+
+    public void DamageKnockBack(Vector2 knockBackDir, float knockBackDistance)
+    {
+        moove.playerRB.velocity += knockBackDir * knockBackDistance;
+        
+    }
+
+    public void GetDamage(int damage)
+    {
+            healthSystem.Damage(damage);
+    }
+
+    public Vector3 GetPosition()
+    {
+        return player.transform.position;
+    }
+
 }
