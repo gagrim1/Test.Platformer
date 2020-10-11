@@ -6,9 +6,6 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     private Image barImage;
-    private HealthSystem healthSystem;
-    private Database database;
-    [SerializeField]private GameObject player;
 
     private void Awake()
     {
@@ -18,30 +15,29 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
-        healthSystem = new HealthSystem(100);
-        setHealth(healthSystem.GetHealthNormalized());
-        healthSystem.onDamage += healthSystem_onDamage;
-        healthSystem.onHeal += healthSystem_onHeal;
+        setHealth(GameController.Instance.playerHealthSystem.GetHealthNormalized());
+        GameController.Instance.playerHealthSystem.onDamage += healthSystem_onDamage;
+        GameController.Instance.playerHealthSystem.onHeal += healthSystem_onHeal;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.L)) 
         {
-            healthSystem.Damage(10);
+            GameController.Instance.playerHealthSystem.Damage(10);
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
-            healthSystem.Heal(10);
+            GameController.Instance.playerHealthSystem.Heal(10);
         }
     }
 
     private void healthSystem_onHeal(object sender, System.EventArgs e) {
-        setHealth(healthSystem.GetHealthNormalized());
+        setHealth(GameController.Instance.playerHealthSystem.GetHealthNormalized());
     }
 
     private void healthSystem_onDamage(object sender, System.EventArgs e) {
-        setHealth(healthSystem.GetHealthNormalized());
+        setHealth(GameController.Instance.playerHealthSystem.GetHealthNormalized());
     }
 
     private void setHealth(float healthNormalized) {
@@ -50,11 +46,11 @@ public class HealthBar : MonoBehaviour
 
     public float GetHealthSystem()
     {
-        return healthSystem.GetHealthNormalized();
+        return GameController.Instance.playerHealthSystem.GetHealthNormalized();
     }
 
     public void GetDamage(int damage)
     {
-        healthSystem.Damage(damage);
+        GameController.Instance.playerHealthSystem.Damage(damage);
     }
 }

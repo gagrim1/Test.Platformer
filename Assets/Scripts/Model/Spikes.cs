@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class Spikes : MonoBehaviour
 {
-    [SerializeField]
-    private HealthBar healthBar;
-
-    private void Awake()
-    {
-        healthBar = GetComponent<HealthBar>();
-    }
-
+    private int dashCount;
+    private int maxDashCount;
+    private bool inDash = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Player player = collision.gameObject.GetComponent<Player>();
-        if (player != null)
+        Debug.Log(collision.gameObject.name + " : " + "got damage from a trap" + " : " + Time.deltaTime);
+        GameController.Instance.playerHealthSystem.Damage(10);
+        if (GameController.Instance.playerHealthSystem.GetHealthAmount() > 0)
+         {
+             GameController.Instance.playerRB.velocity = Vector2.up * 25f;
+         }
+        else
         {
-            // Vector2 knockBackDir = (player.GetPosition() - transform.position).normalized;
-            // player.DamageKnockBack(knockBackDir, 10f);
-            player.GetDamage(10);
-            healthBar.GetDamage(10);
+            GameController.Instance.playerRB.velocity = new Vector2(0, GameController.Instance.playerRB.velocity.y);
         }
     }
+
 }

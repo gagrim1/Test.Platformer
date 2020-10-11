@@ -4,28 +4,25 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-    private HealthSystem healthSystem;
     private Animator animator;
     private MovementScript moove;
     private GameObject player;
+    [SerializeField]
+    private Database database;
 
     private void Awake()
     {
-        healthSystem = GetComponent<HealthSystem>();
+        GameController.Instance.playerHealthSystem = GetComponent<HealthSystem>();
+        //healthSystem = GetComponent<HealthSystem>();
         animator = GetComponent<Animator>();
         moove = GetComponent<MovementScript>();
         moove.SetMaxDashCount(1);
         moove.SetMaxJumpCount(1);
-        healthSystem = new HealthSystem(100);
-    }
-    void Start()
-    {
-       
+        GameController.Instance.playerHealthSystem = new HealthSystem(database.playerData.playerHP);
     }
     void Update()
     {
-        if (healthSystem.GetHealthAmount() > 0)
+        if (GameController.Instance.playerHealthSystem.GetHealthAmount() > 0)
         {
             moove.Flip();
             if (moove.IsGrounded())
@@ -41,21 +38,20 @@ public class Player : MonoBehaviour
             moove.JumpController();
             moove.DashController();
             moove.MovementController();
+            moove.IsWallJump();
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            //healthSystem.Damage(10);
             GetDamage(10);
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
-            healthSystem.Heal(10);
+            GameController.Instance.playerHealthSystem.Heal(10);
         }
-        if (healthSystem.GetHealthAmount() == 0)
+        if (GameController.Instance.playerHealthSystem.GetHealthAmount() == 0)
         {
             animator.SetTrigger("Death");
-            moove.StopMooving();
         }
 }
 
@@ -67,7 +63,7 @@ public class Player : MonoBehaviour
 
     public void GetDamage(int damage)
     {
-            healthSystem.Damage(damage);
+            GameController.Instance.playerHealthSystem.Damage(damage);
     }
 
     public Vector3 GetPosition()

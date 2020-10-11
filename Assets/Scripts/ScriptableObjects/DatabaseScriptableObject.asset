@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ae607db0eb0734eaf2c755ddeb5a1e, type: 3}
   m_Name: DatabaseScriptableObject
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 0605849b36b0b81408f2b7ddfc30688f, type: 2}
+  playerData: {fileID: 11400000, guid: a439a2467d3a7b34a9cd6f751d800c8f, type: 2}
   healthSystem: {fileID: 0}
