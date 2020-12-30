@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        
         if (Instance == null)
         {
             DontDestroyOnLoad(gameObject);

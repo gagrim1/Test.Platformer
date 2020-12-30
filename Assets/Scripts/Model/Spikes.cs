@@ -11,14 +11,6 @@ public class Spikes : MonoBehaviour
     {
         Debug.Log(collision.gameObject.name + " : " + "got damage from a trap" + " : " + Time.deltaTime);
         GameController.Instance.playerHealthSystem.Damage(10);
-        if (GameController.Instance.playerHealthSystem.GetHealthAmount() > 0)
-         {
-             GameController.Instance.playerRB.velocity = Vector2.up * 25f;
-         }
-        else
-        {
-            GameController.Instance.playerRB.velocity = new Vector2(0, GameController.Instance.playerRB.velocity.y);
-        }
     }
 
 }

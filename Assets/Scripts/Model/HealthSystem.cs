@@ -8,8 +8,11 @@ public class HealthSystem : MonoBehaviour
 {
     public event EventHandler onDamage;
     public event EventHandler onHeal;
-    private int healthAmount;
-    private int healthAmountMax;
+    private bool canDamage=true;
+    [SerializeField]
+    private int healthAmount=100;
+    [SerializeField]
+    private int healthAmountMax=100;
 
     public HealthSystem(int healthAmount)
     {
@@ -17,13 +20,42 @@ public class HealthSystem : MonoBehaviour
         this.healthAmount = healthAmount;
     }
 
+    private void Start()
+    {
+        healthAmountMax = 100;
+        healthAmount = healthAmountMax;
+    }
+
     public void Damage(int amount)
     {
-        healthAmount -= amount;
-        if (healthAmount < 0) {
-            healthAmount = 0;
+        if (canDamage)
+        {
+            healthAmount -= amount;
+            if (healthAmount < 0)
+            {
+                healthAmount = 0;
+            }
+
+            if (GetHealthAmount() > 0)
+            {
+                GameController.Instance.playerRB.velocity = (Vector2.up + Vector2.right) * 25f;
+            }
+            else
+            {
+                GameController.Instance.playerRB.velocity = new Vector2(0, GameController.Instance.playerRB.velocity.y);
+            }
+            StartCoroutine(StayImmortal());
+            if (onDamage != null) onDamage(this, EventArgs.Empty);
         }
-        if(onDamage != null) onDamage(this, EventArgs.Empty);
+    }
+    IEnumerator StayImmortal()
+    {
+        if (canDamage == true)
+        {
+            canDamage = false;
+            yield return new WaitForSeconds(1.0f);
+            canDamage = true;
+        }
     }
 
     public void Heal(int amount)

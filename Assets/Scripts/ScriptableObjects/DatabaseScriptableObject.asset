@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DatabaseScriptableObject
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: a439a2467d3a7b34a9cd6f751d800c8f, type: 2}
-  healthSystem: {fileID: 0}
+  healthSystem: {fileID: -8449521531520694794, guid: 435f92d470633674e9459b2b9a0f4311, type: 3}

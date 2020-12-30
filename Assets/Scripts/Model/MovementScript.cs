@@ -12,6 +12,8 @@ public class MovementScript : MonoBehaviour
     [SerializeField]
     private LayerMask wallMask;
 
+    bool canDamage;
+
     private string prevWall = "";
     public Rigidbody2D playerRB;
     private BoxCollider2D playerBC;
@@ -153,8 +155,8 @@ public class MovementScript : MonoBehaviour
         }
     }
 
-    //Getters and setters
-    public int GetJumpCount()
+        //Getters and setters
+        public int GetJumpCount()
     {
         return jumpCount;
     }

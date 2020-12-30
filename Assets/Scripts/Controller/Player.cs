@@ -12,13 +12,14 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+//        gameObject.AddComponent<HealthSystem>();
         GameController.Instance.playerHealthSystem = GetComponent<HealthSystem>();
         //healthSystem = GetComponent<HealthSystem>();
         animator = GetComponent<Animator>();
         moove = GetComponent<MovementScript>();
         moove.SetMaxDashCount(1);
         moove.SetMaxJumpCount(1);
-        GameController.Instance.playerHealthSystem = new HealthSystem(database.playerData.playerHP);
+        //GameController.Instance.playerHealthSystem = new HealthSystem(database.playerData.playerHP);
     }
     void Update()
     {
