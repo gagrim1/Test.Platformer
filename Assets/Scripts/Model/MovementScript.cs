@@ -5,34 +5,31 @@ using UnityEngine;
 
 public class MovementScript : MonoBehaviour
 {
-    private Animator animator;
+    public Animator animator;
 
     [SerializeField]
-    private LayerMask platformMask;
+    public LayerMask platformMask;
     [SerializeField]
-    private LayerMask wallMask;
+    public LayerMask wallMask;
 
     bool canDamage;
 
-    private string prevWall = "";
+    public string prevWall = "";
     public Rigidbody2D playerRB;
-    private BoxCollider2D playerBC;
+    public BoxCollider2D playerBC;
 
-    private int jumpCount;
-    private int dashCount;
-    private int maxJumpCount;
-    private int maxDashCount;
+    public int jumpCount;
+    public int dashCount;
+    public int maxJumpCount;
+    public int maxDashCount;
     [SerializeField]
-    private float scale = 2;
-    private bool inDash = false;
+    public float scale = 2;
+    public bool inDash = false;
 
-    private void Awake()
+    public void Awake()
     {
         playerBC = transform.GetComponent<BoxCollider2D>();
         playerRB = transform.GetComponent<Rigidbody2D>();
-        GameController.Instance.playerRB = playerRB;
-        GameController.Instance.playerBC = playerBC;
-        GameController.Instance.platformMask = platformMask;
         animator = GetComponent<Animator>();
         maxJumpCount = 1;
         maxDashCount = 1;
@@ -40,7 +37,7 @@ public class MovementScript : MonoBehaviour
 
     public bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(GameController.Instance.playerBC.bounds.center, GameController.Instance.playerBC.bounds.size, 0f, Vector2.down, 1f, platformMask);
+        RaycastHit2D hit = Physics2D.BoxCast(playerBC.bounds.center, playerBC.bounds.size, 0f, Vector2.down, 1f, platformMask);
         return hit.collider != null;
     }
 
@@ -52,13 +49,13 @@ public class MovementScript : MonoBehaviour
             {
                 if (IsGrounded())
                 {
-                    GameController.Instance.playerRB.velocity = Vector2.up * jumpVelocity;
+                    playerRB.velocity = Vector2.up * jumpVelocity;
                     animator.SetInteger("AnimState", 3);
                 }
                 else
                 if (jumpCount < maxJumpCount && !IsWallJump())
                 {
-                    GameController.Instance.playerRB.velocity = new Vector2(GameController.Instance.playerRB.velocity.x, jumpVelocity);
+                    playerRB.velocity = new Vector2( playerRB.velocity.x, jumpVelocity);
                     jumpCount++;
                 }
             }
@@ -69,11 +66,11 @@ public class MovementScript : MonoBehaviour
     {
         float jumpVelocity = 35f;
 
-        RaycastHit2D hit = Physics2D.BoxCast(GameController.Instance.playerBC.bounds.center, GameController.Instance.playerBC.bounds.size, 0f, Vector2.right, 0.5f, wallMask);
+        RaycastHit2D hit = Physics2D.BoxCast( playerBC.bounds.center,  playerBC.bounds.size, 0f, Vector2.right, 0.5f, wallMask);
         if (hit.collider != null)
             if (prevWall != hit.collider.gameObject.name)
             {
-                GameController.Instance.playerRB.velocity = Vector2.up * jumpVelocity + Vector2.left * jumpVelocity / 2;
+                 playerRB.velocity = Vector2.up * jumpVelocity + Vector2.left * jumpVelocity / 2;
                 prevWall = hit.collider.gameObject.name;
             }
             else
@@ -91,13 +88,13 @@ public class MovementScript : MonoBehaviour
             if (IsGrounded())
             {
                 StartCoroutine(StayInDash());
-                GameController.Instance.playerRB.velocity = new Vector2(-transform.localScale.x / scale, 0) * dashVelocity;
+                 playerRB.velocity = new Vector2(-transform.localScale.x / scale, 0) * dashVelocity;
             }
             else
             if (dashCount < maxDashCount)
             {
                 StartCoroutine(StayInDash());
-                GameController.Instance.playerRB.velocity = new Vector2(-transform.localScale.x / scale, 0) * dashVelocity;
+                 playerRB.velocity = new Vector2(-transform.localScale.x / scale, 0) * dashVelocity;
                 dashCount++;
             }
         }
@@ -124,19 +121,19 @@ public class MovementScript : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                GameController.Instance.playerRB.velocity = new Vector2(-moveSpeed, playerRB.velocity.y);
+                 playerRB.velocity = new Vector2(-moveSpeed, playerRB.velocity.y);
                 animator.SetInteger("AnimState", 2);
             }
             else
             {
                 if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
                 {
-                    GameController.Instance.playerRB.velocity = new Vector2(+moveSpeed, playerRB.velocity.y);
+                     playerRB.velocity = new Vector2(+moveSpeed, playerRB.velocity.y);
                     animator.SetInteger("AnimState", 2);
                 }
                 else
                 {
-                    GameController.Instance.playerRB.velocity = new Vector2(0, playerRB.velocity.y);
+                     playerRB.velocity = new Vector2(0, playerRB.velocity.y);
                     animator.SetInteger("AnimState", 0);
                 }
             }
@@ -146,51 +143,12 @@ public class MovementScript : MonoBehaviour
     {
         if (!inDash)
         {
-            float gravity = GameController.Instance.playerRB.gravityScale;
-            GameController.Instance.playerRB.gravityScale = 0f;
+            float gravity =  playerRB.gravityScale;
+             playerRB.gravityScale = 0f;
             inDash = true;
             yield return new WaitForSeconds(0.15f);
             inDash = false;
-            GameController.Instance.playerRB.gravityScale = gravity;
+             playerRB.gravityScale = gravity;
         }
-    }
-
-        //Getters and setters
-        public int GetJumpCount()
-    {
-        return jumpCount;
-    }
-
-    public void SetJumpCount(int jumpCount)
-    {
-        this.jumpCount = jumpCount;
-    }
-
-    public int GetDashCount()
-    {
-        return dashCount;
-    }
-
-    public void SetDashCount(int dashCount)
-    {
-        this.dashCount = dashCount;
-    }
-    public int GetMaxJumpCount()
-    {
-        return maxJumpCount;
-    }
-
-    public void SetMaxJumpCount(int maxJumpCount)
-    {
-        this.maxJumpCount = maxJumpCount;
-    }
-    public int GetMaxDashCount()
-    {
-        return maxDashCount;
-    }
-
-    public void SetMaxDashCount(int maxDashCount)
-    {
-        this.maxDashCount = maxDashCount;
     }
 }

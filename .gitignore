@@ -60,3 +60,25 @@ crashlytics-build.properties
 
 
 Assets/notes.md.meta
+
+Assets/NewScripts.meta
+
+Assets/NewScripts/GameData.asset.meta
+
+Assets/NewScripts/GameData.cs.meta
+
+Assets/NewScripts/GameManager.cs.meta
+
+Assets/NewScripts/InputManager.cs.meta
+
+Assets/NewScripts/PlayerData.asset.meta
+
+Assets/NewScripts/PlayerData.cs.meta
+
+Assets/NewScripts/SettingsData.asset.meta
+
+Assets/NewScripts/SettingsData.cs.meta
+
+Assets/Scenes/NewScene.unity.meta
+
+Assets/Scripts/ScriptableObjects/PlayerData.cs.meta
