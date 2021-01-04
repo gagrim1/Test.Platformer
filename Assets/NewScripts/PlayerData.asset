@@ -12,6 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c60dc34bdbd5cdaba0a31f31c53d111, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  healthPoints: 100
   prefab: {fileID: 4670505058319695067, guid: 435f92d470633674e9459b2b9a0f4311, type: 3}
   spawnPosition: {x: 0, y: 0, z: 29}
+  animator: {fileID: 0}
+  rigidBody: {fileID: 0}
+  boxCollider: {fileID: 0}
+  maxHealthPoints: 100
+  maxDashCount: 1
+  maxJumpCount: 1
+  dashCount: 0
+  jumpCount: 0
+  moveSpeed: 50
+  jumpSpeed: 35
+  dashSpeed: 45

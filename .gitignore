@@ -82,3 +82,5 @@ Assets/NewScripts/SettingsData.cs.meta
 Assets/Scenes/NewScene.unity.meta
 
 Assets/Scripts/ScriptableObjects/PlayerData.cs.meta
+
+*.meta

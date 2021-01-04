@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 4670505058319695070}
   - component: {fileID: 4670505058319695065}
   - component: {fileID: 4670505058319695064}
-  - component: {fileID: 4670505058319695068}
   - component: {fileID: 4670505058319695058}
-  - component: {fileID: -7398130304187212767}
-  - component: {fileID: -8449521531520694794}
+  - component: {fileID: 1577701311119831705}
+  - component: {fileID: -1588105823415301765}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -135,26 +134,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4670505058319695068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4670505058319695067}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e79cefec18824434490c25d28313c876, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platformMask:
-    serializedVersion: 2
-    m_Bits: 256
-  wallMask:
-    serializedVersion: 2
-    m_Bits: 512
-  playerRB: {fileID: 0}
-  scale: 2
 --- !u!95 &4670505058319695058
 Animator:
   serializedVersion: 3
@@ -174,7 +153,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-7398130304187212767
+--- !u!114 &1577701311119831705
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,11 +162,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4670505058319695067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8655b543b44e7d748874d31920b39313, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a9168eb19d0169f58519d333ee9b968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  database: {fileID: 11400000, guid: b0f11e7c84813af47a106154c5c9e99b, type: 2}
---- !u!114 &-8449521531520694794
+  playerData: {fileID: 11400000, guid: 34b8905ccc773b0b79d9cef66fe0f5cc, type: 2}
+  platformMask:
+    serializedVersion: 2
+    m_Bits: 256
+  scale: 2
+--- !u!114 &-1588105823415301765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -196,8 +179,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4670505058319695067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eda69347b9d2556478ab4e19b8397c48, type: 3}
+  m_Script: {fileID: 11500000, guid: 06db9fdc7a1c50e26838a1e836b337ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthAmount: 100
-  healthAmountMax: 100
+  playerData: {fileID: 11400000, guid: 34b8905ccc773b0b79d9cef66fe0f5cc, type: 2}
+  jumpCount: 0
+  prevWall: 
+  platformMask:
+    serializedVersion: 2
+    m_Bits: 256
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 512

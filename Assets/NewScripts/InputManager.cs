@@ -5,31 +5,41 @@ using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
-    UnityEvent leftInputEvent;
-    UnityEvent rightInputEvent;
+    public GameManager gameManager;
+    UnityEvent<string> xAxisInputEvent;
     UnityEvent jumpInputEvent;
     UnityEvent dashInputEvent;
 
     void Start()
     {
-        if (leftInputEvent == null) leftInputEvent = new UnityEvent();
+        gameManager = transform.gameObject.GetComponent<GameManager>();
 
-        if (rightInputEvent == null) rightInputEvent = new UnityEvent();
+        if (xAxisInputEvent == null) xAxisInputEvent = new UnityEvent<string>();
+        xAxisInputEvent.AddListener(gameManager.player.GetComponent<WalkController>().Move);
 
         if (jumpInputEvent == null) jumpInputEvent = new UnityEvent();
+        jumpInputEvent.AddListener(gameManager.player.GetComponent<JumpController>().Jump);
 
         if (dashInputEvent == null) dashInputEvent = new UnityEvent();
     }
     
     void Update()
     {
-        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && leftInputEvent != null)
+        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && xAxisInputEvent != null)
         {
-            leftInputEvent.Invoke();
+            xAxisInputEvent.Invoke("left");
         }
-        if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && rightInputEvent != null)
+        if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && xAxisInputEvent != null)
         {
-            rightInputEvent.Invoke();
+            xAxisInputEvent.Invoke("right");
+        }
+        if ((   !Input.GetKey(KeyCode.D) 
+             && !Input.GetKey(KeyCode.RightArrow) 
+             && !Input.GetKey(KeyCode.A) 
+             && !Input.GetKey(KeyCode.LeftArrow)) 
+             || xAxisInputEvent == null)
+        {
+            xAxisInputEvent.Invoke("none");
         }
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && jumpInputEvent != null)
         {

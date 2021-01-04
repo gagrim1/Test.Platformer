@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public GameManager gameManager;
+    
     private Animator animator;
     private MovementScript moove;
 
     private void Awake()
     {
+        gameManager = transform.parent.gameObject.GetComponent<GameManager>();
         animator = GetComponent<Animator>();
         moove = GetComponent<MovementScript>();
         moove.maxDashCount = 1;
         moove.maxJumpCount = 1;
     }
-    
+
     void Update()
     {
         

@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public GameData gameData;
     public GameObject player;
 
-    void Start()
+    void Awake()
     {
         CreatePlayer();
     }
@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     void CreatePlayer()
     {
         player = Instantiate(gameData.playerData.prefab, gameData.playerData.spawnPosition, Quaternion.identity, transform);
+        gameData.playerData.animator = player.GetComponent<Animator>();
+        gameData.playerData.rigidBody = player.GetComponent<Rigidbody2D>();
+        gameData.playerData.boxCollider = player.GetComponent<BoxCollider2D>();
     }
 
 }
