@@ -4,41 +4,32 @@ using UnityEngine;
 
 public class WalkController : MonoBehaviour
 {
+    [HideInInspector]
     public PlayerData playerData;
-    public LayerMask platformMask;
-    public float scale;
-
-    void Start()
-    {
-        scale = 2;
-    }
-    public bool IsGrounded()
-    {
-        RaycastHit2D hit = Physics2D.BoxCast(playerData.boxCollider.bounds.center, playerData.boxCollider.bounds.size, 0f, Vector2.down, 1f, platformMask);
-        return hit.collider != null;
-    }
+    [HideInInspector]
+    public MovementManager _move;
 
     public void Flip(string direction)
     {
         Vector2 charScale = transform.localScale;
         if (direction == "right")
         {
-            charScale.x = -scale;
+            charScale.x = -playerData.scale;
         }
         if (direction == "left")
         {
-            charScale.x = scale;
+            charScale.x = playerData.scale;
         }
         transform.localScale = charScale;
     }
 
-    public void Move(string direction)
+    public void Move(string direction) // мы вызовем этот метод с события, см. InputManager
     {
         if(playerData.isInDash)
         {
             return;
         }
-        if(IsGrounded())
+        if(_move.IsGrounded())
         {
             playerData.jumpCount = 0;
             playerData.dashCount = 0;
@@ -66,6 +57,6 @@ public class WalkController : MonoBehaviour
             playerData.rigidBody.velocity = new Vector2(0, playerData.rigidBody.velocity.y);
             playerData.animator.SetInteger("AnimState", 0);
         }  
-        transform.gameObject.GetComponent<JumpController>().IsWallJump();
+        transform.gameObject.GetComponent<JumpController>()._move.IsWallJump();
     }
 }

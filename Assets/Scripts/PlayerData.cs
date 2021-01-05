@@ -10,13 +10,16 @@ public class PlayerData : ScriptableObject
     public Animator animator;
     public Rigidbody2D rigidBody;
     public BoxCollider2D boxCollider;
-    public int maxHealthPoints;
+    public float maxHealthPoints;
+    public float healthPoints;
     public int maxDashCount;
-    public int maxJumpCount;
     public int dashCount;
+    public int maxJumpCount;
     public int jumpCount;
     public float moveSpeed;
     public float jumpSpeed;
     public float dashSpeed;
+    public float dashTime;
     public bool isInDash;
+    public float scale;
 }

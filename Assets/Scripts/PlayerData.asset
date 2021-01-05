@@ -18,10 +18,14 @@ MonoBehaviour:
   rigidBody: {fileID: 0}
   boxCollider: {fileID: 0}
   maxHealthPoints: 100
+  healthPoints: 100
   maxDashCount: 1
-  maxJumpCount: 1
   dashCount: 0
-  jumpCount: 1
+  maxJumpCount: 1
+  jumpCount: 0
   moveSpeed: 20
-  jumpSpeed: 50
+  jumpSpeed: 35
   dashSpeed: 45
+  dashTime: 0.15
+  isInDash: 0
+  scale: 2

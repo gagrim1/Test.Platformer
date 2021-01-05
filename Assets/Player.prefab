@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 4670505058319695065}
   - component: {fileID: 4670505058319695064}
   - component: {fileID: 4670505058319695058}
-  - component: {fileID: 1577701311119831705}
-  - component: {fileID: -1588105823415301765}
-  - component: {fileID: 6699907400399617198}
+  - component: {fileID: 1694034568967776738}
+  - component: {fileID: -1560769528196954283}
+  - component: {fileID: 3158375920369886271}
+  - component: {fileID: -2476761272941271226}
+  - component: {fileID: 2866059673849856819}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -154,7 +156,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1577701311119831705
+--- !u!114 &1694034568967776738
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,15 +165,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 4670505058319695067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a9168eb19d0169f58519d333ee9b968, type: 3}
+  m_Script: {fileID: 11500000, guid: a330527b3d967d7fda23ce143f7608c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 34b8905ccc773b0b79d9cef66fe0f5cc, type: 2}
+  prevWall: 
   platformMask:
     serializedVersion: 2
     m_Bits: 256
-  scale: 2
---- !u!114 &-1588105823415301765
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 512
+  thrust: 30
+  _walk: {fileID: 3158375920369886271}
+  _jump: {fileID: -1560769528196954283}
+  _dash: {fileID: -2476761272941271226}
+--- !u!114 &-1560769528196954283
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,15 +192,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06db9fdc7a1c50e26838a1e836b337ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 34b8905ccc773b0b79d9cef66fe0f5cc, type: 2}
-  prevWall: 
-  platformMask:
-    serializedVersion: 2
-    m_Bits: 256
-  wallMask:
-    serializedVersion: 2
-    m_Bits: 512
---- !u!114 &6699907400399617198
+  playerData: {fileID: 0}
+  _move: {fileID: 0}
+--- !u!114 &3158375920369886271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4670505058319695067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a9168eb19d0169f58519d333ee9b968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 0}
+  _move: {fileID: 0}
+--- !u!114 &-2476761272941271226
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -203,9 +220,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 096b95b4cba6000b8bc39b1a4b4870b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 0}
+  _move: {fileID: 0}
+--- !u!114 &2866059673849856819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4670505058319695067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9503f18878b94fec93519d69e960d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 34b8905ccc773b0b79d9cef66fe0f5cc, type: 2}
-  settingsData: {fileID: 11400000, guid: 1069e788aaff547f38fd0394e0f0be56, type: 2}
-  platformMask:
-    serializedVersion: 2
-    m_Bits: 256
-  scale: 0

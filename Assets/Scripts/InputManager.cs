@@ -50,5 +50,16 @@ public class InputManager : MonoBehaviour
         {
             dashInputEvent.Invoke();
         }
+
+        // TEST: delete after testing
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            gameManager.player.GetComponent<HealthManager>().Damage(10);
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            gameManager.player.GetComponent<HealthManager>().Heal(7);
+        }
     }
 }

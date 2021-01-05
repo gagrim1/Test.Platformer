@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
         gameData.playerData.rigidBody = player.GetComponent<Rigidbody2D>();
         gameData.playerData.boxCollider = player.GetComponent<BoxCollider2D>();
         gameData.playerData.isInDash = false;
+        gameData.playerData.healthPoints = gameData.playerData.maxHealthPoints;
     }
 
 }

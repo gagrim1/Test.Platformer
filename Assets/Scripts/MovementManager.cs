@@ -2,36 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpController : MonoBehaviour
+public class MovementManager : MonoBehaviour
 {
     public PlayerData playerData;
     public string prevWall;
     public LayerMask platformMask;
     public LayerMask wallMask;
+    public float thrust;
+
+    public WalkController _walk;
+    public JumpController _jump;
+    public DashController _dash;
 
     void Start()
     {
         prevWall = "";
+        _walk.playerData = playerData;
+        _walk._move = _jump._move = _dash._move = gameObject.GetComponent<MovementManager>();
+        _jump.playerData = playerData;
+        _dash.playerData = playerData;
     }
+
     public bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.BoxCast(playerData.boxCollider.bounds.center, playerData.boxCollider.bounds.size, 0f, Vector2.down, 1f, platformMask);
         return hit.collider != null;
     }
-    public void Jump() // мы вызовем этот метод с события, см. InputManager
-    {         
-        if (IsGrounded())
+
+    public void DamagedPush(Vector2 from)
+    {   
+        Vector2 pushDirection = 2 * Vector2.up;
+        if(from.x < transform.position.x)
         {
-            playerData.rigidBody.velocity = Vector2.up * playerData.jumpSpeed;
-            playerData.animator.SetInteger("AnimState", 3);
-            Debug.Log("Jump!"); 
+            pushDirection += Vector2.right;
         }
-        else if (playerData.jumpCount < playerData.maxJumpCount && !IsWallJump())
+        else
         {
-            playerData.rigidBody.velocity = new Vector2(playerData.rigidBody.velocity.x, playerData.jumpSpeed);
-            playerData.jumpCount++;
-            Debug.Log("Double Jump!"); 
-        }        
+            pushDirection += Vector2.left;
+        }
+        StartCoroutine(StayInFall());
+        playerData.rigidBody.velocity = pushDirection * thrust; 
+    }
+
+    IEnumerator StayInFall()
+    {
+        playerData.isInDash = true;
+        yield return new WaitForSeconds(0.5f);
+        playerData.isInDash = false;
     }
 
     public bool IsWallJump()
@@ -42,7 +59,6 @@ public class JumpController : MonoBehaviour
             {
                 playerData.rigidBody.velocity = Vector2.up * playerData.jumpSpeed + Vector2.left * playerData.jumpSpeed / 2;
                 prevWall = hit.collider.gameObject.name;
-                Debug.Log("Wall Jump!"); 
             }
             else
             {
