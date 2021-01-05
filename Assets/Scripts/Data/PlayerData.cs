@@ -21,5 +21,6 @@ public class PlayerData : ScriptableObject
     public float dashSpeed;
     public float dashTime;
     public bool isInDash;
+    public float pushSpeed;
     public float scale;
 }

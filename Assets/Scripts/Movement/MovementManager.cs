@@ -8,7 +8,6 @@ public class MovementManager : MonoBehaviour
     public string prevWall;
     public LayerMask platformMask;
     public LayerMask wallMask;
-    public float thrust;
 
     public WalkController _walk;
     public JumpController _jump;
@@ -41,7 +40,7 @@ public class MovementManager : MonoBehaviour
             pushDirection += Vector2.left;
         }
         StartCoroutine(StayInFall());
-        playerData.rigidBody.velocity = pushDirection * thrust; 
+        playerData.rigidBody.velocity = pushDirection * playerData.pushSpeed; 
     }
 
     IEnumerator StayInFall()

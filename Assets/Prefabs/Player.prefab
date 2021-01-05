@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 2866059673849856819}
   m_Layer: 10
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,7 +176,6 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 512
-  thrust: 30
   _walk: {fileID: 3158375920369886271}
   _jump: {fileID: -1560769528196954283}
   _dash: {fileID: -2476761272941271226}
