@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4670505058319695058}
   - component: {fileID: 1577701311119831705}
   - component: {fileID: -1588105823415301765}
+  - component: {fileID: 6699907400399617198}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -183,7 +184,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 34b8905ccc773b0b79d9cef66fe0f5cc, type: 2}
-  jumpCount: 0
   prevWall: 
   platformMask:
     serializedVersion: 2
@@ -191,3 +191,21 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &6699907400399617198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4670505058319695067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 096b95b4cba6000b8bc39b1a4b4870b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 34b8905ccc773b0b79d9cef66fe0f5cc, type: 2}
+  settingsData: {fileID: 11400000, guid: 1069e788aaff547f38fd0394e0f0be56, type: 2}
+  platformMask:
+    serializedVersion: 2
+    m_Bits: 256
+  scale: 0

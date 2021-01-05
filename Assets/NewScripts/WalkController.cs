@@ -34,9 +34,14 @@ public class WalkController : MonoBehaviour
 
     public void Move(string direction)
     {
+        if(playerData.isInDash)
+        {
+            return;
+        }
         if(IsGrounded())
         {
             playerData.jumpCount = 0;
+            playerData.dashCount = 0;
             playerData.animator.SetTrigger("Grounded");
         }
         else 

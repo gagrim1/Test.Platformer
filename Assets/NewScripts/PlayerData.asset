@@ -21,7 +21,7 @@ MonoBehaviour:
   maxDashCount: 1
   maxJumpCount: 1
   dashCount: 0
-  jumpCount: 0
-  moveSpeed: 50
-  jumpSpeed: 35
+  jumpCount: 1
+  moveSpeed: 20
+  jumpSpeed: 50
   dashSpeed: 45

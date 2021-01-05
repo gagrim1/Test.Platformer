@@ -21,6 +21,7 @@ public class InputManager : MonoBehaviour
         jumpInputEvent.AddListener(gameManager.player.GetComponent<JumpController>().Jump);
 
         if (dashInputEvent == null) dashInputEvent = new UnityEvent();
+        dashInputEvent.AddListener(gameManager.player.GetComponent<DashController>().Dash);
     }
     
     void Update()
@@ -34,10 +35,10 @@ public class InputManager : MonoBehaviour
             xAxisInputEvent.Invoke("right");
         }
         if ((   !Input.GetKey(KeyCode.D) 
-             && !Input.GetKey(KeyCode.RightArrow) 
-             && !Input.GetKey(KeyCode.A) 
-             && !Input.GetKey(KeyCode.LeftArrow)) 
-             || xAxisInputEvent == null)
+            && !Input.GetKey(KeyCode.RightArrow) 
+            && !Input.GetKey(KeyCode.A) 
+            && !Input.GetKey(KeyCode.LeftArrow)) 
+            || xAxisInputEvent == null)
         {
             xAxisInputEvent.Invoke("none");
         }
