@@ -165,10 +165,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4670505058319695067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a330527b3d967d7fda23ce143f7608c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 289f66bfbcc684b8a9cb3b7532241f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 34b8905ccc773b0b79d9cef66fe0f5cc, type: 2}
+  playerData: {fileID: 11400000, guid: 0e49cf848a5c624468d874e0519e3f9d, type: 2}
   prevWall: 
   platformMask:
     serializedVersion: 2
@@ -176,9 +176,9 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 512
-  _walk: {fileID: 3158375920369886271}
+  _walk: {fileID: -2476761272941271226}
   _jump: {fileID: -1560769528196954283}
-  _dash: {fileID: -2476761272941271226}
+  _dash: {fileID: 3158375920369886271}
 --- !u!114 &-1560769528196954283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4670505058319695067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06db9fdc7a1c50e26838a1e836b337ce, type: 3}
+  m_Script: {fileID: 11500000, guid: d91cc9911fc59babe96119457b049040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 0}
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4670505058319695067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a9168eb19d0169f58519d333ee9b968, type: 3}
+  m_Script: {fileID: 11500000, guid: a0d59cc5740248283a389d22f6cebaf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 0}
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4670505058319695067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 096b95b4cba6000b8bc39b1a4b4870b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 6720795db32017d13aa3ce7d7ea9f944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 0}
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4670505058319695067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9503f18878b94fec93519d69e960d02, type: 3}
+  m_Script: {fileID: 11500000, guid: 74a2abd519c072623869f2f8233ecb81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 34b8905ccc773b0b79d9cef66fe0f5cc, type: 2}
+  playerData: {fileID: 11400000, guid: 0e49cf848a5c624468d874e0519e3f9d, type: 2}
