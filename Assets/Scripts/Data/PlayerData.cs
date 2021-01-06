@@ -20,7 +20,8 @@ public class PlayerData : ScriptableObject
     public float jumpSpeed;
     public float dashSpeed;
     public float dashTime;
-    public bool isInDash;
+    public bool isControlled;
+    public bool isGrounded;
     public float pushSpeed;
     public float scale;
 }

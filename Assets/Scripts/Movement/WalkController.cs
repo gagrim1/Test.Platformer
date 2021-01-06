@@ -23,21 +23,23 @@ public class WalkController : MonoBehaviour
         transform.localScale = charScale;
     }
 
-    public void Move(string direction) // мы вызовем этот метод с события, см. InputManager
+    public void ChangeGroundedStatus()
     {
-        if(playerData.isInDash)
+        if(playerData.isGrounded)
         {
-            return;
-        }
-        if(_move.IsGrounded())
-        {
-            playerData.jumpCount = 0;
-            playerData.dashCount = 0;
             playerData.animator.SetTrigger("Grounded");
         }
         else 
         {
             playerData.animator.SetTrigger("Jump");
+        }
+    }
+
+    public void Move(string direction) // мы вызовем этот метод с события, см. InputManager
+    {
+        if(!playerData.isControlled)
+        {
+            return;
         }
 
         if (direction == "left")
@@ -56,7 +58,6 @@ public class WalkController : MonoBehaviour
         {
             playerData.rigidBody.velocity = new Vector2(0, playerData.rigidBody.velocity.y);
             playerData.animator.SetInteger("AnimState", 0);
-        }  
-        transform.gameObject.GetComponent<JumpController>()._move.IsWallJump();
+        } 
     }
 }

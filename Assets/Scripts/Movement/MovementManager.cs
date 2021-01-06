@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MovementManager : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class MovementManager : MonoBehaviour
     public JumpController _jump;
     public DashController _dash;
 
+    public UnityEvent groundedEvent;
+    public UnityEvent getControllEvent;
+    public UnityEvent loseControllEvent;
+
     void Start()
     {
         prevWall = "";
@@ -20,6 +25,43 @@ public class MovementManager : MonoBehaviour
         _walk._move = _jump._move = _dash._move = gameObject.GetComponent<MovementManager>();
         _jump.playerData = playerData;
         _dash.playerData = playerData;
+
+        playerData.isGrounded = true;
+        playerData.isControlled = true;
+
+        if(groundedEvent == null) groundedEvent = new  UnityEvent();
+        groundedEvent.AddListener(_walk.ChangeGroundedStatus);
+        if(getControllEvent == null) getControllEvent = new  UnityEvent();
+        getControllEvent.AddListener(GetControll);
+        if(loseControllEvent == null) loseControllEvent = new  UnityEvent();
+        loseControllEvent.AddListener(LoseControll);
+    }
+
+    void LoseControll()
+    {
+        playerData.isControlled = false;
+    }
+
+    void GetControll()
+    {
+        playerData.isControlled = true;
+        transform.parent.gameObject.GetComponent<InputManager>().ReloadDir();
+    }
+
+    void Update()
+    {
+        bool newIsGrounded = IsGrounded();
+        if (newIsGrounded != playerData.isGrounded)
+        {
+            playerData.isGrounded = newIsGrounded;
+            groundedEvent.Invoke();
+        }
+        if(playerData.isGrounded)
+        {
+            playerData.jumpCount = 0;
+            playerData.dashCount = 0;
+        }
+        IsWallJump();
     }
 
     public bool IsGrounded()
@@ -45,9 +87,9 @@ public class MovementManager : MonoBehaviour
 
     IEnumerator StayInFall()
     {
-        playerData.isInDash = true;
+        loseControllEvent.Invoke();
         yield return new WaitForSeconds(0.5f);
-        playerData.isInDash = false;
+        getControllEvent.Invoke();      
     }
 
     public bool IsWallJump()

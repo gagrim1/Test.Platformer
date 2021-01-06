@@ -10,6 +10,9 @@ public class InputManager : MonoBehaviour
     UnityEvent jumpInputEvent;
     UnityEvent dashInputEvent;
 
+    public enum Dir {Left, Right, None, Reload};
+    public Dir dir;
+
     void Start()
     {
         gameManager = transform.gameObject.GetComponent<GameManager>();
@@ -22,17 +25,32 @@ public class InputManager : MonoBehaviour
 
         if (dashInputEvent == null) dashInputEvent = new UnityEvent();
         dashInputEvent.AddListener(gameManager.player.GetComponent<DashController>().Dash);
+
+        dir = Dir.None;        
     }
     
+    public void ReloadDir()
+    {
+        dir = Dir.Reload;
+    }
+
     void Update()
     {
         if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && xAxisInputEvent != null)
         {
-            xAxisInputEvent.Invoke("left");
+            if (dir != Dir.Left)
+            {
+                dir = Dir.Left;
+                xAxisInputEvent.Invoke("left"); 
+            }              
         }
         if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && xAxisInputEvent != null)
         {
-            xAxisInputEvent.Invoke("right");
+            if (dir != Dir.Right)
+            {
+                dir = Dir.Right;
+                xAxisInputEvent.Invoke("right"); 
+            }           
         }
         if ((   !Input.GetKey(KeyCode.D) 
             && !Input.GetKey(KeyCode.RightArrow) 
@@ -40,7 +58,11 @@ public class InputManager : MonoBehaviour
             && !Input.GetKey(KeyCode.LeftArrow)) 
             || xAxisInputEvent == null)
         {
-            xAxisInputEvent.Invoke("none");
+            if (dir != Dir.None)
+            {
+                dir = Dir.None;
+                xAxisInputEvent.Invoke("none"); 
+            } 
         }
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && jumpInputEvent != null)
         {

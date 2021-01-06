@@ -20,13 +20,14 @@ MonoBehaviour:
   maxHealthPoints: 100
   healthPoints: 0
   maxDashCount: 1
-  dashCount: 0
+  dashCount: 1
   maxJumpCount: 1
-  jumpCount: 0
+  jumpCount: 1
   moveSpeed: 20
   jumpSpeed: 35
   dashSpeed: 45
   dashTime: 0.15
-  isInDash: 0
-  pushSpeed: 20
+  isControlled: 1
+  isGrounded: 0
+  pushSpeed: 15
   scale: 2
