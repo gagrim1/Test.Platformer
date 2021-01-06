@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   prefab: {fileID: 4670505058319695067, guid: fc8ed9eed9b455082914a25e118f0fa2, type: 3}
-  spawnPosition: {x: 0, y: 0, z: 29}
+  spawnPosition: {x: 0, y: 0, z: 0}
   animator: {fileID: 0}
   rigidBody: {fileID: 0}
   boxCollider: {fileID: 0}
   maxHealthPoints: 100
   healthPoints: 0
   maxDashCount: 1
-  dashCount: 1
+  dashCount: 0
   maxJumpCount: 1
-  jumpCount: 1
+  jumpCount: 0
   moveSpeed: 20
   jumpSpeed: 35
   dashSpeed: 45
   dashTime: 0.15
   isControlled: 1
-  isGrounded: 0
+  isGrounded: 1
   pushSpeed: 15
   scale: 2

@@ -18,6 +18,8 @@ public class MovementManager : MonoBehaviour
     public UnityEvent getControllEvent;
     public UnityEvent loseControllEvent;
 
+    public List<Collider2D> GroundColliders = new List<Collider2D>();
+
     void Start()
     {
         prevWall = "";
@@ -35,6 +37,23 @@ public class MovementManager : MonoBehaviour
         getControllEvent.AddListener(GetControll);
         if(loseControllEvent == null) loseControllEvent = new  UnityEvent();
         loseControllEvent.AddListener(LoseControll);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer==8 && !GroundColliders.Contains(collision.collider))
+            foreach (var p in collision.contacts)
+                if (p.point.y < playerData.boxCollider.bounds.min.y)
+                {
+                    GroundColliders.Add(collision.collider);
+                    break;
+                }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (GroundColliders.Contains(collision.collider))
+            GroundColliders.Remove(collision.collider);
     }
 
     void LoseControll()
@@ -58,6 +77,7 @@ public class MovementManager : MonoBehaviour
         }
         if(playerData.isGrounded)
         {
+            prevWall = null;
             playerData.jumpCount = 0;
             playerData.dashCount = 0;
         }
@@ -66,8 +86,7 @@ public class MovementManager : MonoBehaviour
 
     public bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(playerData.boxCollider.bounds.center, playerData.boxCollider.bounds.size, 0f, Vector2.down, 1f, platformMask);
-        return hit.collider != null;
+        return GroundColliders.Count > 0;
     }
 
     public void DamagedPush(Vector2 from)
@@ -98,7 +117,7 @@ public class MovementManager : MonoBehaviour
         if (hit.collider != null)
             if (prevWall != hit.collider.gameObject.name)
             {
-                playerData.rigidBody.velocity = Vector2.up * playerData.jumpSpeed + Vector2.left * playerData.jumpSpeed / 2;
+                playerData.rigidBody.velocity = Vector2.up * playerData.jumpSpeed*1;// + Vector2.left * playerData.jumpSpeed / 2;
                 prevWall = hit.collider.gameObject.name;
             }
             else
