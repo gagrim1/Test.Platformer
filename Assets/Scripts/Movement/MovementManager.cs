@@ -18,7 +18,7 @@ public class MovementManager : MonoBehaviour
     public UnityEvent getControllEvent;
     public UnityEvent loseControllEvent;
 
-    public List<Collider2D> GroundColliders = new List<Collider2D>();
+   // public List<Collider2D> GroundColliders = new List<Collider2D>();
 
     void Start()
     {
@@ -39,22 +39,22 @@ public class MovementManager : MonoBehaviour
         loseControllEvent.AddListener(LoseControll);
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer==8 && !GroundColliders.Contains(collision.collider))
-            foreach (var p in collision.contacts)
-                if (p.point.y < playerData.boxCollider.bounds.min.y)
-                {
-                    GroundColliders.Add(collision.collider);
-                    break;
-                }
-    }
+    //private void OnCollisionStay2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.layer == LayerMask.NameToLayer("Platform") && !GroundColliders.Contains(collision.collider))
+    //        foreach (var p in collision.contacts)
+    //            if (p.point.y < playerData.boxCollider.bounds.min.y)
+    //            {
+    //                GroundColliders.Add(collision.collider);
+    //                break;
+    //            }
+    //}
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (GroundColliders.Contains(collision.collider))
-            GroundColliders.Remove(collision.collider);
-    }
+    //private void OnCollisionExit2D(Collision2D collision)
+    //{
+    //    if (GroundColliders.Contains(collision.collider))
+    //        GroundColliders.Remove(collision.collider);
+    //}
 
     void LoseControll()
     {
@@ -86,7 +86,8 @@ public class MovementManager : MonoBehaviour
 
     public bool IsGrounded()
     {
-        return GroundColliders.Count > 0;
+        //return GroundColliders.Count > 0;
+        return playerData.rigidBody.IsTouchingLayers(platformMask);
     }
 
     public void DamagedPush(Vector2 from)

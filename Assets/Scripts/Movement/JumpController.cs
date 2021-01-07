@@ -16,6 +16,7 @@ public class JumpController : MonoBehaviour
         {
             playerData.rigidBody.velocity = new Vector2(playerData.rigidBody.velocity.x, playerData.jumpSpeed);
             playerData.animator.SetInteger("AnimState", 3);
+            playerData.animator.SetTrigger("Jump");
             playerData.jumpCount++;
         }       
     }
