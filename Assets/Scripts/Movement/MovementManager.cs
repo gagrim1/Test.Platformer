@@ -18,7 +18,7 @@ public class MovementManager : MonoBehaviour
     public UnityEvent getControllEvent;
     public UnityEvent loseControllEvent;
 
-   // public List<Collider2D> GroundColliders = new List<Collider2D>();
+    public List<Collider2D> GroundColliders = new List<Collider2D>();
 
     void Start()
     {
@@ -39,22 +39,22 @@ public class MovementManager : MonoBehaviour
         loseControllEvent.AddListener(LoseControll);
     }
 
-    //private void OnCollisionStay2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.layer == LayerMask.NameToLayer("Platform") && !GroundColliders.Contains(collision.collider))
-    //        foreach (var p in collision.contacts)
-    //            if (p.point.y < playerData.boxCollider.bounds.min.y)
-    //            {
-    //                GroundColliders.Add(collision.collider);
-    //                break;
-    //            }
-    //}
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Platform") && !GroundColliders.Contains(collision.collider))
+            foreach (var p in collision.contacts)
+                if (p.point.y < playerData.boxCollider.bounds.min.y && !(p.point.x < playerData.boxCollider.bounds.min.x || p.point.x > playerData.boxCollider.bounds.max.x))
+                {
+                    GroundColliders.Add(collision.collider);
+                    break;
+                }
+    }
 
-    //private void OnCollisionExit2D(Collision2D collision)
-    //{
-    //    if (GroundColliders.Contains(collision.collider))
-    //        GroundColliders.Remove(collision.collider);
-    //}
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (GroundColliders.Contains(collision.collider))
+            GroundColliders.Remove(collision.collider);
+    }
 
     void LoseControll()
     {
@@ -87,7 +87,10 @@ public class MovementManager : MonoBehaviour
     public bool IsGrounded()
     {
         //return GroundColliders.Count > 0;
-        return playerData.rigidBody.IsTouchingLayers(platformMask);
+        if (GroundColliders.Count > 0)
+            return playerData.rigidBody.IsTouchingLayers(platformMask);
+        else
+            return false;
     }
 
     public void DamagedPush(Vector2 from)
@@ -114,10 +117,11 @@ public class MovementManager : MonoBehaviour
 
     public bool IsWallJump()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(playerData.boxCollider.bounds.center, playerData.boxCollider.bounds.size, 0f, Vector2.right, 0.5f, wallMask);
+        RaycastHit2D hit = Physics2D.BoxCast(playerData.boxCollider.bounds.center, playerData.boxCollider.bounds.size+Vector3.right*0.1f, 0f, Vector2.zero, 0f, wallMask);
         if (hit.collider != null)
-            if (prevWall != hit.collider.gameObject.name)
+            if (prevWall != hit.collider.gameObject.name && !playerData.isGrounded)
             {
+                Debug.Log("wall jump");
                 playerData.rigidBody.velocity = Vector2.up * playerData.jumpSpeed*1;// + Vector2.left * playerData.jumpSpeed / 2;
                 prevWall = hit.collider.gameObject.name;
             }
