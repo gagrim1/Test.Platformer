@@ -12,6 +12,7 @@ public class PlayerData : ScriptableObject
     public BoxCollider2D boxCollider;
     public float maxHealthPoints;
     public float healthPoints;
+    public int coinScore;
     public int maxDashCount;
     public int dashCount;
     public int maxJumpCount;

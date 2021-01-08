@@ -14,4 +14,9 @@ public class UIManager : MonoBehaviour
         PlayerData playerData = gameData.playerData;
         healthBar.fillAmount = playerData.healthPoints / playerData.maxHealthPoints;
     }
+
+    public void RedrawCoinScore()
+    {
+        scoreText.text = gameData.playerData.coinScore.ToString();
+    }
 }
