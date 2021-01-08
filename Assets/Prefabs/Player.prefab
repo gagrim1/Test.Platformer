@@ -179,6 +179,16 @@ MonoBehaviour:
   _walk: {fileID: -2476761272941271226}
   _jump: {fileID: -1560769528196954283}
   _dash: {fileID: 3158375920369886271}
+  groundedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  getControllEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  loseControllEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  GroundColliders: []
 --- !u!114 &-1560769528196954283
 MonoBehaviour:
   m_ObjectHideFlags: 0
