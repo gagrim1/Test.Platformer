@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public GameData gameData;
     public Image healthBar;
+    public Text scoreText;
 
     public void RedrawHealthBar()
     {
