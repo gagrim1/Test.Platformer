@@ -86,7 +86,6 @@ public class MovementManager : MonoBehaviour
 
     public bool IsGrounded()
     {
-        //return GroundColliders.Count > 0;
         if (GroundColliders.Count > 0)
             return playerData.rigidBody.IsTouchingLayers(platformMask);
         else
@@ -121,7 +120,6 @@ public class MovementManager : MonoBehaviour
         if (hit.collider != null)
             if (prevWall != hit.collider.gameObject.name && !playerData.isGrounded)
             {
-                Debug.Log("wall jump");
                 playerData.rigidBody.velocity = Vector2.up * playerData.jumpSpeed*1;// + Vector2.left * playerData.jumpSpeed / 2;
                 prevWall = hit.collider.gameObject.name;
             }
