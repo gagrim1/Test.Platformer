@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
     public GameManager gameManager;
     UnityEvent<string> xAxisInputEvent;
     UnityEvent jumpInputEvent;
+    UnityEvent fallDawnInputEvent;
     UnityEvent<string> dashInputEvent;
 
     public enum Dir {Left, Right, None, Reload};
@@ -25,6 +26,9 @@ public class InputManager : MonoBehaviour
 
         if (dashInputEvent == null) dashInputEvent = new UnityEvent<string>();
         dashInputEvent.AddListener(gameManager.player.GetComponent<DashController>().Dash);
+
+        if (fallDawnInputEvent == null) fallDawnInputEvent = new UnityEvent();
+        fallDawnInputEvent.AddListener(gameManager.player.GetComponent<FallDawnController>().FallDawn);
 
         dir = Dir.None;        
     }
@@ -67,6 +71,10 @@ public class InputManager : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && jumpInputEvent != null)
         {
             jumpInputEvent.Invoke();
+        }
+        if((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) && fallDawnInputEvent != null)
+        {
+            fallDawnInputEvent.Invoke();
         }
         if (Input.GetKeyDown(KeyCode.E) && dashInputEvent != null)
         {
