@@ -8,7 +8,8 @@ public class InputManager : MonoBehaviour
     public GameManager gameManager;
     UnityEvent<string> xAxisInputEvent;
     UnityEvent jumpInputEvent;
-    UnityEvent dashInputEvent;
+    UnityEvent fallDawnInputEvent;
+    UnityEvent<string> dashInputEvent;
 
     public enum Dir {Left, Right, None, Reload};
     public Dir dir;
@@ -23,8 +24,11 @@ public class InputManager : MonoBehaviour
         if (jumpInputEvent == null) jumpInputEvent = new UnityEvent();
         jumpInputEvent.AddListener(gameManager.player.GetComponent<JumpController>().Jump);
 
-        if (dashInputEvent == null) dashInputEvent = new UnityEvent();
+        if (dashInputEvent == null) dashInputEvent = new UnityEvent<string>();
         dashInputEvent.AddListener(gameManager.player.GetComponent<DashController>().Dash);
+
+        if (fallDawnInputEvent == null) fallDawnInputEvent = new UnityEvent();
+        fallDawnInputEvent.AddListener(gameManager.player.GetComponent<FallDawnController>().FallDawn);
 
         dir = Dir.None;        
     }
@@ -68,9 +72,17 @@ public class InputManager : MonoBehaviour
         {
             jumpInputEvent.Invoke();
         }
-        if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Q)) && dashInputEvent != null)
+        if((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) && fallDawnInputEvent != null)
         {
-            dashInputEvent.Invoke();
+            fallDawnInputEvent.Invoke();
+        }
+        if (Input.GetKeyDown(KeyCode.E) && dashInputEvent != null)
+        {
+            dashInputEvent.Invoke("right");
+        }
+        if (Input.GetKeyDown(KeyCode.Q) && dashInputEvent != null)
+        {
+            dashInputEvent.Invoke("left");
         }
 
         // TEST: delete after testing

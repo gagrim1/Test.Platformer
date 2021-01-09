@@ -13,6 +13,7 @@ public class MovementManager : MonoBehaviour
     public WalkController _walk;
     public JumpController _jump;
     public DashController _dash;
+    public FallDawnController _fallDawn;
 
     public UnityEvent groundedEvent;
     public UnityEvent getControllEvent;
@@ -24,9 +25,10 @@ public class MovementManager : MonoBehaviour
     {
         prevWall = "";
         _walk.playerData = playerData;
-        _walk._move = _jump._move = _dash._move = gameObject.GetComponent<MovementManager>();
+        _walk._move = _jump._move = _dash._move = _fallDawn._move = gameObject.GetComponent<MovementManager>();
         _jump.playerData = playerData;
         _dash.playerData = playerData;
+        _fallDawn.playerData = playerData;
 
         playerData.isGrounded = true;
         playerData.isControlled = true;
@@ -41,7 +43,7 @@ public class MovementManager : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Platform") && !GroundColliders.Contains(collision.collider))
+        if ((collision.gameObject.layer == LayerMask.NameToLayer("Platform") || collision.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform")) && !GroundColliders.Contains(collision.collider))
             foreach (var p in collision.contacts)
                 if (p.point.y < playerData.boxCollider.bounds.min.y && !(p.point.x < playerData.boxCollider.bounds.min.x || p.point.x > playerData.boxCollider.bounds.max.x))
                 {
