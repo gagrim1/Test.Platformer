@@ -8,17 +8,31 @@ public class FallDawnController : MonoBehaviour
     public PlayerData playerData;
     [HideInInspector]
     public MovementManager _move;
+    public Collider2D[] localGroupColliders;
     public void FallDawn()
     {
-        if(playerData.isGrounded)
+        if (playerData.isGrounded)
         {
             StartCoroutine(jumpDown());
         }
     }
     IEnumerator jumpDown()
     {
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("OneWayPlatform"), true);
+        localGroupColliders = _move.GroundColliders.ToArray();
+        foreach (Collider2D collider in localGroupColliders)
+        {
+            if (collider.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform")) 
+            {
+                collider.GetComponent<PlatformEffector2D>().colliderMask -= (int) Mathf.Pow(2,LayerMask.NameToLayer("Player"));
+            }
+        }
         yield return new WaitForSeconds(0.15f);
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("OneWayPlatform"), false);
+        foreach (Collider2D collider in localGroupColliders)
+        {
+            if (collider.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform")) 
+            {
+                collider.GetComponent<PlatformEffector2D>().colliderMask += (int)Mathf.Pow(2, LayerMask.NameToLayer("Player"));
+            }
+        }
     }
 }

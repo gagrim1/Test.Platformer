@@ -13,7 +13,7 @@ public class OneWayPlatformScript : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKey(KeyCode.S) && Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.S))
         {
             StartCoroutine(jumpDown());
         }
