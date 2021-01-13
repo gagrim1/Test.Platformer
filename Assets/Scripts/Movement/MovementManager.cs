@@ -19,10 +19,13 @@ public class MovementManager : MonoBehaviour
     public UnityEvent getControllEvent;
     public UnityEvent loseControllEvent;
 
+    public GameObject level;
+
     public List<Collider2D> GroundColliders = new List<Collider2D>();
 
     void Start()
     {
+        level = transform.parent.gameObject;
         prevWall = "";
         _walk.playerData = playerData;
         _walk._move = _jump._move = _dash._move = _fallDawn._move = gameObject.GetComponent<MovementManager>();
@@ -66,7 +69,7 @@ public class MovementManager : MonoBehaviour
     void GetControll()
     {
         playerData.isControlled = true;
-        transform.parent.gameObject.GetComponent<InputManager>().ReloadDir();
+        level.GetComponent<InputManager>().ReloadDir();
     }
 
     void Update()

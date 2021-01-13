@@ -15,6 +15,7 @@ public class MovingPlatform : MonoBehaviour
     public float speed;
     public bool direction=true;
     public List<Rigidbody2D> passengers;
+    Transform lastParent;
 
     private void Start()
     {
@@ -55,21 +56,25 @@ public class MovingPlatform : MonoBehaviour
                 direction = true;
             move = -(end - start) / Vector2.Distance(start, end) * Mathf.Clamp(speed * Time.fixedDeltaTime, 0f, Vector2.Distance(now, start));
         }
-        rigidBody.MovePosition(now + move);
-        passengers.ForEach(Move);
+        transform.position = now + move;
+        //rigidBody.MovePosition(now + move);
+        //passengers.ForEach(Move);
     }
 
     private void Move(Rigidbody2D passenger)
     {
-        passenger.MovePosition((Vector2)passenger.transform.position + move);
+        //passenger.MovePosition((Vector2)passenger.transform.position + move);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        passengers.Add(collision.gameObject.GetComponent<Rigidbody2D>());
+        lastParent = collision.gameObject.transform.parent;
+        collision.gameObject.transform.parent = transform;
+        //passengers.Add(collision.gameObject.GetComponent<Rigidbody2D>());
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        passengers.Remove(collision.gameObject.GetComponent<Rigidbody2D>());
+        collision.gameObject.transform.parent = lastParent;
+        //passengers.Remove(collision.gameObject.GetComponent<Rigidbody2D>());
     }
 }
