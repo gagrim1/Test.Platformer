@@ -78,8 +78,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1815845743
+  m_SortingLayer: 2
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: f2ed27d6c1c3ccc48959bcca269d88f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -191,6 +191,7 @@ MonoBehaviour:
   loseControllEvent:
     m_PersistentCalls:
       m_Calls: []
+  level: {fileID: 0}
   GroundColliders: []
 --- !u!114 &-1560769528196954283
 MonoBehaviour:
@@ -274,3 +275,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 0}
   _move: {fileID: 0}
+  localGroupColliders: []
