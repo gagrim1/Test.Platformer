@@ -7,7 +7,7 @@ public class Thorns : MonoBehaviour
     public float damageValue;
     public Animator controllerIsUp;
     private bool isUp = true;
-    private List<Collider2D> targets;
+    private List<Collider2D> targets = new List<Collider2D>();
     void Start()
     {
         StartCoroutine(ChangeState());
@@ -23,7 +23,8 @@ public class Thorns : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        targets.Remove(collision);
+        if(targets.Contains(collision))
+            targets.Remove(collision);
     }
     IEnumerator ChangeState()
     {
