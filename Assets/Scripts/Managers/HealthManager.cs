@@ -28,6 +28,7 @@ public class HealthManager : MonoBehaviour
 
     public void Damage(float damageValue)
     {
+        playerData.animator.SetTrigger("Hurt");
         ChangeHealth(-damageValue);
     }
 

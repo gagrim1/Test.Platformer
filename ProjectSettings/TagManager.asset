@@ -39,11 +39,20 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1772902777
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Platforms
+    uniqueID: 1563534505
+    locked: 0
   - name: Spikes
     uniqueID: 449049153
+    locked: 0
+  - name: Pickups
+    uniqueID: 2714670563
     locked: 0
   - name: Player
     uniqueID: 1815845743

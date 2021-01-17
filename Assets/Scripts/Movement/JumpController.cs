@@ -15,8 +15,7 @@ public class JumpController : MonoBehaviour
         if (canJump)
         {
             playerData.rigidBody.velocity = new Vector2(playerData.rigidBody.velocity.x, playerData.jumpSpeed);
-            playerData.animator.SetInteger("AnimState", 3);
-            playerData.animator.SetTrigger("Jump");
+            playerData.animator.SetBool("isGrounded", false);
             playerData.jumpCount++;
         }       
     }
