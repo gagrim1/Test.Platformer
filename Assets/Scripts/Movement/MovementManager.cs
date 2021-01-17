@@ -77,6 +77,7 @@ public class MovementManager : MonoBehaviour
         bool newIsGrounded = IsGrounded();
         if (newIsGrounded != playerData.isGrounded)
         {
+            playerData.animator.SetBool("IsGrounded", newIsGrounded);
             playerData.isGrounded = newIsGrounded;
             groundedEvent.Invoke();
         }

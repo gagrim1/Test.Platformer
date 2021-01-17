@@ -27,11 +27,12 @@ public class WalkController : MonoBehaviour
     {
         if(playerData.isGrounded)
         {
-            playerData.animator.SetTrigger("Grounded");
+            //playerData.animator.SetBool("IsGrounded", true);
         }
-        else 
+        else
         {
-            playerData.animator.SetTrigger("Jump");
+            //playerData.animator.SetBool("IsGrounded", false);
+            //playerData.animator.SetTrigger("Jump");
         }
     }
 
@@ -46,18 +47,18 @@ public class WalkController : MonoBehaviour
         {   
             Flip(direction);
             playerData.rigidBody.velocity = new Vector2(-playerData.moveSpeed, playerData.rigidBody.velocity.y);
-            playerData.animator.SetInteger("AnimState", 2);
+            playerData.animator.SetBool("Run", true);
         }
         else if (direction == "right")
         {
             Flip(direction);
             playerData.rigidBody.velocity = new Vector2(+playerData.moveSpeed, playerData.rigidBody.velocity.y);
-            playerData.animator.SetInteger("AnimState", 2);
+            playerData.animator.SetBool("Run", true);
         } 
         else 
         {
             playerData.rigidBody.velocity = new Vector2(0, playerData.rigidBody.velocity.y);
-            playerData.animator.SetInteger("AnimState", 0);
+            playerData.animator.SetBool("Run", false);
         } 
     }
 }
