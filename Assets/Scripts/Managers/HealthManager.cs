@@ -11,6 +11,7 @@ public class HealthManager : MonoBehaviour
 
     void Start()
     {
+        playerData.isAlive = true;
         _ui = GameObject.FindWithTag("LevelScene").GetComponent<UIManager>();
         playerData.healthPoints = playerData.maxHealthPoints;
         if (healthChangedEvent == null) healthChangedEvent = new UnityEvent();
@@ -28,12 +29,35 @@ public class HealthManager : MonoBehaviour
 
     public void Damage(float damageValue)
     {
-        playerData.animator.SetTrigger("Hurt");
-        ChangeHealth(-damageValue);
+        if (playerData.isAlive)
+        {
+            playerData.animator.SetTrigger("Hurt");
+            ChangeHealth(-damageValue);
+            if (playerData.healthPoints == 0)
+                Death();
+        }
     }
 
     public void Heal(float healValue)
     {
+        if (playerData.healthPoints == 0 && healValue > 0)
+            Recover();
         ChangeHealth(healValue);
+    }
+
+    public void Death()
+    {
+        playerData.animator.SetBool("Run", false);
+        playerData.animator.SetTrigger("Death");
+        playerData.rigidBody.velocity = new Vector2(0, playerData.rigidBody.velocity.y);
+        playerData.isAlive = false;
+        playerData.isControlled = false;
+    }
+
+    public void Recover()
+    {
+        playerData.animator.SetTrigger("Recover");
+        playerData.isAlive = true;
+        playerData.isControlled = true;
     }
 }

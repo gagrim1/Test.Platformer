@@ -25,15 +25,7 @@ public class WalkController : MonoBehaviour
 
     public void ChangeGroundedStatus()
     {
-        if(playerData.isGrounded)
-        {
-            //playerData.animator.SetBool("IsGrounded", true);
-        }
-        else
-        {
-            //playerData.animator.SetBool("IsGrounded", false);
-            //playerData.animator.SetTrigger("Jump");
-        }
+        playerData.animator.SetBool("IsGrounded", playerData.isGrounded);
     }
 
     public void Move(string direction) // мы вызовем этот метод с события, см. InputManager
