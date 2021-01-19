@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class HealthManager : MonoBehaviour
 {
     public PlayerData playerData;
+    public MovementManager _move;
     UnityEvent healthChangedEvent;
     UIManager _ui;
 
@@ -34,30 +35,32 @@ public class HealthManager : MonoBehaviour
             playerData.animator.SetTrigger("Hurt");
             ChangeHealth(-damageValue);
             if (playerData.healthPoints == 0)
-                Death();
+                StartCoroutine(Death());
         }
     }
 
     public void Heal(float healValue)
     {
         if (playerData.healthPoints == 0 && healValue > 0)
-            Recover();
+            StartCoroutine(Recover());
         ChangeHealth(healValue);
     }
 
-    public void Death()
+    IEnumerator Death()
     {
+        playerData.isAlive = false;
+        _move.loseControllEvent.Invoke();
         playerData.animator.SetBool("Run", false);
+        yield return new WaitForSeconds(0.5f);
         playerData.animator.SetTrigger("Death");
         playerData.rigidBody.velocity = new Vector2(0, playerData.rigidBody.velocity.y);
-        playerData.isAlive = false;
-        playerData.isControlled = false;
     }
 
-    public void Recover()
+    IEnumerator Recover()
     {
         playerData.animator.SetTrigger("Recover");
+        yield return new WaitForSeconds(1.6f);
         playerData.isAlive = true;
-        playerData.isControlled = true;
+        _move.getControllEvent.Invoke();
     }
 }

@@ -248,6 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 0e49cf848a5c624468d874e0519e3f9d, type: 2}
+  _move: {fileID: 1694034568967776738}
 --- !u!114 &1706644598638644788
 MonoBehaviour:
   m_ObjectHideFlags: 0
