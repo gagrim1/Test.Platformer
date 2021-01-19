@@ -13,7 +13,6 @@ public class FallDawnController : MonoBehaviour
     {
         if (playerData.isGrounded)
         {
-            playerData.animator.SetBool("IsGrounded", false);
             StartCoroutine(jumpDown());
         }
     }

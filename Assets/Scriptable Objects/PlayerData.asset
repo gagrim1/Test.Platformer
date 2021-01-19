@@ -18,7 +18,8 @@ MonoBehaviour:
   rigidBody: {fileID: 0}
   boxCollider: {fileID: 0}
   maxHealthPoints: 100
-  healthPoints: 0
+  healthPoints: 7
+  coinScore: 3
   maxDashCount: 1
   dashCount: 0
   maxJumpCount: 1
@@ -27,6 +28,7 @@ MonoBehaviour:
   jumpSpeed: 35
   dashSpeed: 45
   dashTime: 0.15
+  isAlive: 1
   isControlled: 1
   isGrounded: 1
   pushSpeed: 15

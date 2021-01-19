@@ -68,7 +68,10 @@ public class MovementManager : MonoBehaviour
 
     void GetControll()
     {
-        playerData.isControlled = true;
+        if(playerData.isAlive)
+            playerData.isControlled = true;
+        else
+            playerData.rigidBody.velocity = new Vector2(0, playerData.rigidBody.velocity.y);
         level.GetComponent<InputManager>().ReloadDir();
     }
 
@@ -77,7 +80,6 @@ public class MovementManager : MonoBehaviour
         bool newIsGrounded = IsGrounded();
         if (newIsGrounded != playerData.isGrounded)
         {
-            playerData.animator.SetBool("IsGrounded", newIsGrounded);
             playerData.isGrounded = newIsGrounded;
             groundedEvent.Invoke();
         }
@@ -109,14 +111,14 @@ public class MovementManager : MonoBehaviour
         {
             pushDirection += Vector2.left;
         }
-        StartCoroutine(StayInFall());
+        StartCoroutine(StayInFall(0.5f));
         playerData.rigidBody.velocity = pushDirection * playerData.pushSpeed; 
     }
 
-    IEnumerator StayInFall()
+    IEnumerator StayInFall(float time)
     {
         loseControllEvent.Invoke();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(time);
         getControllEvent.Invoke();      
     }
 

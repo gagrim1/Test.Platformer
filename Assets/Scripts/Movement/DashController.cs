@@ -37,8 +37,10 @@ public class DashController : MonoBehaviour
         float gravity =  playerData.rigidBody.gravityScale;
         playerData.rigidBody.gravityScale = 0f;
         playerData.rigidBody.velocity = new Vector2(direction, 0) * playerData.dashSpeed;
+        playerData.animator.SetBool("Dash", true);
         _move.loseControllEvent.Invoke();
         yield return new WaitForSeconds(playerData.dashTime);
+        playerData.animator.SetBool("Dash", false);
         playerData.rigidBody.gravityScale = gravity;
         _move.getControllEvent.Invoke(); 
     }
