@@ -57,24 +57,31 @@ public class MovingPlatform : MonoBehaviour
             move = -(end - start) / Vector2.Distance(start, end) * Mathf.Clamp(speed * Time.fixedDeltaTime, 0f, Vector2.Distance(now, start));
         }
         transform.position = now + move;
-        //rigidBody.MovePosition(now + move);
-        //passengers.ForEach(Move);
-    }
-
-    private void Move(Rigidbody2D passenger)
-    {
-        //passenger.MovePosition((Vector2)passenger.transform.position + move);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        lastParent = collision.gameObject.transform.parent;
+        if(!isTopCollision(collision))
+        {
+            return;
+        }
+        lastParent = collision.gameObject.GetComponent<MovementManager>().level.transform;
         collision.gameObject.transform.parent = transform;
-        //passengers.Add(collision.gameObject.GetComponent<Rigidbody2D>());
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
         collision.gameObject.transform.parent = lastParent;
-        //passengers.Remove(collision.gameObject.GetComponent<Rigidbody2D>());
+    }
+
+    private bool isTopCollision(Collision2D collision)
+    {
+        Bounds platformColBounds = gameObject.GetComponent<Collider2D>().bounds;
+        Bounds colBounds = collision.collider.bounds;
+        float eps = 0.05f;
+        if((colBounds.min.y + eps >= platformColBounds.max.y) && (colBounds.max.x + eps >= platformColBounds.min.x && colBounds.min.x - eps <= platformColBounds.max.x))
+        {
+            return true;
+        }
+        return false;
     }
 }
