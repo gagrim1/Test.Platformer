@@ -27,6 +27,7 @@ public class DashController : MonoBehaviour
         bool canDash = playerData.dashCount < playerData.maxDashCount && playerData.isControlled;
         if(canDash)
         {
+            _move._walk.Flip(dir);
             StartCoroutine(StayInDash());
             playerData.dashCount++;
         }
