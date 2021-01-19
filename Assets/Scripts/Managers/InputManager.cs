@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
 
     public enum Dir {Left, Right, None, Reload};
     public Dir dir;
+    public bool reloading;
 
     void Start()
     {
@@ -30,7 +31,8 @@ public class InputManager : MonoBehaviour
         if (fallDawnInputEvent == null) fallDawnInputEvent = new UnityEvent();
         fallDawnInputEvent.AddListener(gameManager.player.GetComponent<FallDawnController>().FallDawn);
 
-        dir = Dir.None;        
+        dir = Dir.None;  
+        reloading = true;      
     }
     
     public void ReloadDir()
@@ -40,6 +42,12 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+        if(reloading){
+            StartCoroutine(ReloadingTimer());
+            ReloadDir();
+            //Debug.Log("Reloading...");
+        }
+
         if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && xAxisInputEvent != null)
         {
             if (dir != Dir.Left)
@@ -96,4 +104,12 @@ public class InputManager : MonoBehaviour
             gameManager.player.GetComponent<HealthManager>().Heal(7);
         }
     }
+
+    IEnumerator ReloadingTimer()
+    {   
+        reloading = false;
+        yield return new WaitForSeconds(0.1f);
+        reloading = true;
+    }
+
 }
