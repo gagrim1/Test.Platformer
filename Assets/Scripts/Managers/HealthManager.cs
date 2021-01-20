@@ -58,6 +58,7 @@ public class HealthManager : MonoBehaviour
 
     IEnumerator Recover()
     {
+        _move.Respawn();
         playerData.animator.SetTrigger("Recover");
         yield return new WaitForSeconds(1.6f);
         playerData.isAlive = true;
