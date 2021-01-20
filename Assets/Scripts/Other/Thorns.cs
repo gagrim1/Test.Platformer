@@ -5,12 +5,17 @@ using UnityEngine;
 public class Thorns : MonoBehaviour
 {
     public float damageValue;
+    public float phaseTime;
     public Animator controllerIsUp;
+    public bool isMoving;
     private bool isUp = true;
     private List<Collider2D> targets = new List<Collider2D>();
     void Start()
     {
-        StartCoroutine(ChangeState());
+        if(isMoving)
+        {
+            StartCoroutine(ChangeState());
+        }
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -28,7 +33,7 @@ public class Thorns : MonoBehaviour
     }
     IEnumerator ChangeState()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(phaseTime);
         controllerIsUp.SetBool("isUp", !isUp);
         yield return new WaitForSeconds(0.2f);
         isUp = !isUp;
