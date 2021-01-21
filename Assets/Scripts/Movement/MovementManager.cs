@@ -115,6 +115,12 @@ public class MovementManager : MonoBehaviour
         playerData.rigidBody.velocity = pushDirection * playerData.pushSpeed; 
     }
 
+    public void Respawn()
+    {
+        playerData.rigidBody.velocity = Vector2.zero;
+        gameObject.transform.position = playerData.spawnPoint.transform.position;
+    }
+
     IEnumerator StayInFall(float time)
     {
         loseControllEvent.Invoke();

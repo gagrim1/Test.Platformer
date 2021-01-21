@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameData gameData;
     public GameObject player;
+    public GameObject spawnPoint;
 
     void Awake()
     {
@@ -14,7 +15,8 @@ public class GameManager : MonoBehaviour
 
     void CreatePlayer()
     {
-        player = Instantiate(gameData.playerData.prefab, gameData.playerData.spawnPosition, Quaternion.identity, transform);
+        player = Instantiate(gameData.playerData.prefab, spawnPoint.transform.position, Quaternion.identity, transform);
+        gameData.playerData.spawnPoint = spawnPoint;
         gameData.playerData.animator = player.GetComponent<Animator>();
         gameData.playerData.rigidBody = player.GetComponent<Rigidbody2D>();
         gameData.playerData.boxCollider = player.GetComponent<BoxCollider2D>();

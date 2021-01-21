@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public GameObject prefab;
-    public Vector3 spawnPosition;
+    public GameObject spawnPoint;
     public Animator animator;
     public Rigidbody2D rigidBody;
     public BoxCollider2D boxCollider;
