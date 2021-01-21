@@ -41,9 +41,7 @@ public class HealthManager : MonoBehaviour
 
     public void Heal(float healValue)
     {
-        if (playerData.healthPoints == 0 && healValue > 0)
-            StartCoroutine(Recover());
-        ChangeHealth(healValue);
+        ChangeHealth(healValue); 
     }
 
     IEnumerator Death()
@@ -54,10 +52,13 @@ public class HealthManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         playerData.animator.SetTrigger("Death");
         playerData.rigidBody.velocity = new Vector2(0, playerData.rigidBody.velocity.y);
+        yield return new WaitForSeconds(1.0f);
+        StartCoroutine(Recover());
     }
 
     IEnumerator Recover()
     {
+        Heal(playerData.maxHealthPoints);
         _move.Respawn();
         playerData.animator.SetTrigger("Recover");
         yield return new WaitForSeconds(1.6f);

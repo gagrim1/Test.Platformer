@@ -102,6 +102,10 @@ public class MovementManager : MonoBehaviour
 
     public void DamagedPush(Vector2 from)
     {   
+        if(!playerData.isAlive)
+        {
+            return;
+        }
         Vector2 pushDirection = 2 * Vector2.up;
         if(from.x < transform.position.x)
         {
