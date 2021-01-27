@@ -2940,7 +2940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: 3c4aded49d640ee01836331dd9ee7186, type: 2}
   player: {fileID: 4670505058319695067, guid: fc8ed9eed9b455082914a25e118f0fa2, type: 3}
-  spawnPoint: {fileID: 0}
+  firstCheckpoint: {fileID: 991070004}
 --- !u!114 &679537094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3393,7 +3393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platform: {fileID: 0}
-  platformRigidBody: {fileID: 0}
+  sprite: {fileID: 0}
 --- !u!212 &795713443
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4115,6 +4115,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1183232203473612109, guid: c785fb2dbe0e15bf48118c839e4cef0e, type: 3}
   m_PrefabInstance: {fileID: 628106595}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &991070004 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2579822776513169477, guid: be1578924c7ab4e80b49a5261ded0c91, type: 3}
+  m_PrefabInstance: {fileID: 2579822776707844847}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &994065883 stripped
 Transform:
@@ -8688,6 +8693,10 @@ PrefabInstance:
     - target: {fileID: 2579822776513169477, guid: be1578924c7ab4e80b49a5261ded0c91, type: 3}
       propertyPath: m_Name
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2579822776513169477, guid: be1578924c7ab4e80b49a5261ded0c91, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be1578924c7ab4e80b49a5261ded0c91, type: 3}

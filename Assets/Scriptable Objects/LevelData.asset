@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2d0353c978e1f739afb9bf2015e460, type: 3}
   m_Name: LevelData
   m_EditorClassIdentifier: 
+  checkpoints:
+  - {fileID: 0}
