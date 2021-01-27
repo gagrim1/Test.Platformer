@@ -46,7 +46,10 @@ public class MovementManager : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if ((collision.gameObject.layer == LayerMask.NameToLayer("Platform") || collision.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform")) && !GroundColliders.Contains(collision.collider))
+        if ((collision.gameObject.layer == LayerMask.NameToLayer("Platform") 
+            || collision.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform")
+            || collision.gameObject.layer == LayerMask.NameToLayer("DestroyingPlatform")) 
+            && !GroundColliders.Contains(collision.collider))
             foreach (var p in collision.contacts)
                 if (p.point.y < playerData.boxCollider.bounds.min.y && !(p.point.x < playerData.boxCollider.bounds.min.x || p.point.x > playerData.boxCollider.bounds.max.x))
                 {

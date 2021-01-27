@@ -174,7 +174,7 @@ MonoBehaviour:
   prevWall: 
   platformMask:
     serializedVersion: 2
-    m_Bits: 2304
+    m_Bits: 6400
   wallMask:
     serializedVersion: 2
     m_Bits: 512
