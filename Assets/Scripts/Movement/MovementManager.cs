@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class MovementManager : MonoBehaviour
 {
     public PlayerData playerData;
+    public LevelData levelData;
     public string prevWall;
     public LayerMask platformMask;
     public LayerMask wallMask;
@@ -26,6 +27,7 @@ public class MovementManager : MonoBehaviour
     void Start()
     {
         level = transform.parent.gameObject;
+        levelData = level.GetComponent<GameManager>().gameData.levelData;
         prevWall = "";
         _walk.playerData = playerData;
         _walk._move = _jump._move = _dash._move = _fallDawn._move = gameObject.GetComponent<MovementManager>();
@@ -122,7 +124,7 @@ public class MovementManager : MonoBehaviour
     public void Respawn()
     {
         playerData.rigidBody.velocity = Vector2.zero;
-        gameObject.transform.position = playerData.spawnPoint.transform.position;
+        gameObject.transform.position = levelData.checkpoints[levelData.checkpoints.Count - 1].transform.position;
     }
 
     IEnumerator StayInFall(float time)
