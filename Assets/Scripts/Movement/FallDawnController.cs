@@ -21,7 +21,8 @@ public class FallDawnController : MonoBehaviour
         localGroupColliders = _move.GroundColliders.ToArray();
         foreach (Collider2D collider in localGroupColliders)
         {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform")) 
+            if (collider.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform")
+                || collider.gameObject.layer == LayerMask.NameToLayer("DestroyingPlatform")) 
             {
                 collider.GetComponent<PlatformEffector2D>().colliderMask -= (int) Mathf.Pow(2,LayerMask.NameToLayer("Player"));
             }
@@ -29,7 +30,8 @@ public class FallDawnController : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
         foreach (Collider2D collider in localGroupColliders)
         {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform")) 
+            if (collider.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform")
+                || collider.gameObject.layer == LayerMask.NameToLayer("DestroyingPlatform")) 
             {
                 collider.GetComponent<PlatformEffector2D>().colliderMask += (int)Mathf.Pow(2, LayerMask.NameToLayer("Player"));
             }
