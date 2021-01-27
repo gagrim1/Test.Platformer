@@ -7,4 +7,5 @@ public class GameData : ScriptableObject
 {
     public PlayerData playerData;
     public SettingsData settingsData;
+    public LevelData levelData;
 }
