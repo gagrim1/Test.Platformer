@@ -137,7 +137,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 015c41a24a47b284cbd9beef4e9cff3c, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &4670505058319695058
 Animator:
@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 0e49cf848a5c624468d874e0519e3f9d, type: 2}
+  levelData: {fileID: 0}
   prevWall: 
   platformMask:
     serializedVersion: 2
