@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: simple_tileset_1
+  m_Script: {fileID: 11500000, guid: 535f8e525ff367c4ba67961e201a05ed, type: 3}
+  m_Name: RandomBackgroundTile
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -504596096526233300, guid: 3bf29f7e29ada4919b584de59bdb4b25, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -34,3 +34,6 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
+  m_Sprites:
+  - {fileID: -8438235406444999338, guid: 3bf29f7e29ada4919b584de59bdb4b25, type: 3}
+  - {fileID: 920940011578898723, guid: 3bf29f7e29ada4919b584de59bdb4b25, type: 3}
