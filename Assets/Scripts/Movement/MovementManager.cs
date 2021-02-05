@@ -66,12 +66,18 @@ public class MovementManager : MonoBehaviour
             GroundColliders.Remove(collision.collider);
     }
 
-    void LoseControll()
+    public void LoseControll()
     {
         playerData.isControlled = false;
     }
 
-    void GetControll()
+    public void StopMoving()
+    {
+        playerData.rigidBody.velocity = new Vector2(0f, playerData.rigidBody.velocity.y);
+    }
+
+
+    public void GetControll()
     {
         if(playerData.isAlive)
             playerData.isControlled = true;

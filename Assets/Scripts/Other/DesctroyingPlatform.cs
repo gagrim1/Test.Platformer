@@ -16,9 +16,7 @@ public class DesctroyingPlatform : MonoBehaviour
         if (collision.rigidbody.IsTouchingLayers(SortingLayer.NameToID("Player")))
         {
             StartCoroutine(Disapear());
-            Debug.Log("1");
         }
-        Debug.Log(collision.rigidbody.name);
     }
 
     IEnumerator Disapear()

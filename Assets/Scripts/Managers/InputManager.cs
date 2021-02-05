@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
     UnityEvent<string> xAxisInputEvent;
     UnityEvent jumpInputEvent;
     UnityEvent fallDawnInputEvent;
+    UnityEvent attackInputEvent;
     UnityEvent<string> dashInputEvent;
 
     public enum Dir {Left, Right, None, Reload};
@@ -30,6 +31,9 @@ public class InputManager : MonoBehaviour
 
         if (fallDawnInputEvent == null) fallDawnInputEvent = new UnityEvent();
         fallDawnInputEvent.AddListener(gameManager.player.GetComponent<FallDawnController>().FallDawn);
+
+        if (attackInputEvent == null) attackInputEvent = new UnityEvent();
+        attackInputEvent.AddListener(gameManager.player.GetComponent<AttackController>().Attack);
 
         dir = Dir.None;  
         reloading = true;      
@@ -102,6 +106,11 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             gameManager.player.GetComponent<HealthManager>().Heal(7);
+        }
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            attackInputEvent.Invoke();
         }
     }
 
