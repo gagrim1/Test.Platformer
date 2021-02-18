@@ -18,8 +18,8 @@ MonoBehaviour:
   rigidBody: {fileID: 0}
   boxCollider: {fileID: 0}
   maxHealthPoints: 100
-  healthPoints: 79
-  coinScore: 0
+  healthPoints: 80
+  coinScore: 34
   maxDashCount: 1
   dashCount: 0
   maxJumpCount: 1

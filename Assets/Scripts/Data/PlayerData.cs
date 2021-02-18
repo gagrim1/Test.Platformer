@@ -10,6 +10,7 @@ public class PlayerData : ScriptableObject
     public Animator animator;
     public Rigidbody2D rigidBody;
     public BoxCollider2D boxCollider;
+    public SoundManager soundManager;
     public float maxHealthPoints;
     public float healthPoints;
     public int coinScore;
