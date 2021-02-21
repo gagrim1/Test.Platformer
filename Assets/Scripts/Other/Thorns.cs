@@ -68,7 +68,6 @@ public class Thorns : MonoBehaviour
     }
     private void Damage(Collider2D col)
     {
-        col.gameObject.GetComponent<HealthManager>().Damage(damageValue);
-        col.gameObject.GetComponent<MovementManager>().DamagedPush(transform.position);
+        col.gameObject.GetComponent<IHealthManager>().Damage(damageValue);
     }
 }

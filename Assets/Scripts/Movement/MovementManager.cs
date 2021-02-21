@@ -149,6 +149,7 @@ public class MovementManager : MonoBehaviour
         if (hit.collider != null)
             if (prevWall != hit.collider.gameObject.name && !playerData.isGrounded)
             {
+                playerData.soundManager.PlayWallJump();
                 playerData.rigidBody.velocity = Vector2.up * playerData.jumpSpeed*1;// + Vector2.left * playerData.jumpSpeed / 2;
                 prevWall = hit.collider.gameObject.name;
             }

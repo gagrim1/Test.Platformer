@@ -12,16 +12,16 @@ public class AttackController : MonoBehaviour
     private Collider2D[] enemies;
     public void Attack()
     {
+        if (!playerData.isControlled)
+            return;
         //play animation
+        movement.StopMoving();
+        movement.LoseControll();
+        playerData.animator.SetBool("Run",false);
         playerData.animator.SetTrigger("Attack");
-        StartCoroutine(stayInAttack());
-        //check enemys
-        enemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        //hurt enemys
-        foreach(Collider2D enemy in enemies)
-        {
-            Debug.Log(enemy.name);
-        }
+        playerData.soundManager.PlayAttack();
+        StartCoroutine(StayInAttack());
+        StartCoroutine(DelayedAttack());
     }
 
     private void OnDrawGizmosSelected()
@@ -30,16 +30,27 @@ public class AttackController : MonoBehaviour
             Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
-    IEnumerator stayInAttack()
+    IEnumerator StayInAttack()
     {
-        movement.StopMoving();
-        movement.LoseControll();
         yield return new WaitForSeconds(0.05f);
-        yield return new WaitUntil(isNotAttacking);
+        yield return new WaitUntil(IsNotAttacking);
         movement.GetControll();
     }
 
-   private bool isNotAttacking()
+    IEnumerator DelayedAttack()
+    {
+        yield return new WaitForSeconds(0.2f);
+        //check enemys
+        enemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        //hurt enemys
+        foreach (Collider2D enemy in enemies)
+        {
+            //Debug.Log(enemy.name);
+            enemy.GetComponent<IHealthManager>().Damage(10);
+        }
+    }
+
+    private bool IsNotAttacking()
     {
         return !playerData.animator.GetCurrentAnimatorStateInfo(playerData.animator.GetLayerIndex("Base Layer")).IsName("Attack");
    }

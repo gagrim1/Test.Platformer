@@ -52,6 +52,11 @@ public class InputManager : MonoBehaviour
             //Debug.Log("Reloading...");
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            attackInputEvent.Invoke();
+        } 
+
         if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && xAxisInputEvent != null)
         {
             if (dir != Dir.Left)
@@ -100,17 +105,12 @@ public class InputManager : MonoBehaviour
         // TEST: delete after testing
         if (Input.GetKeyDown(KeyCode.K))
         {
-            gameManager.player.GetComponent<HealthManager>().Damage(10);
+            gameManager.player.GetComponent<IHealthManager>().Damage(10);
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            gameManager.player.GetComponent<HealthManager>().Heal(7);
-        }
-
-        if(Input.GetMouseButtonDown(0))
-        {
-            attackInputEvent.Invoke();
+            gameManager.player.GetComponent<IHealthManager>().Heal(7);
         }
     }
 

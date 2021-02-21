@@ -14,6 +14,10 @@ public class JumpController : MonoBehaviour
         bool canJump = playerData.jumpCount < playerData.maxJumpCount && !_move.IsWallJump() && playerData.isControlled;  
         if (canJump)
         {
+            if (playerData.isGrounded)
+                playerData.soundManager.PlayJump();
+            else
+                playerData.soundManager.PlayAirJump();
             playerData.rigidBody.velocity = new Vector2(playerData.rigidBody.velocity.x, playerData.jumpSpeed);
             playerData.jumpCount++;
         }       

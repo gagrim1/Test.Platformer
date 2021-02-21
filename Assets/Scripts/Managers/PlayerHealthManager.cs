@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class HealthManager : MonoBehaviour
+public class PlayerHealthManager : MonoBehaviour, IHealthManager
 {
     public PlayerData playerData;
     public MovementManager _move;
@@ -19,7 +19,7 @@ public class HealthManager : MonoBehaviour
         healthChangedEvent.AddListener(_ui.RedrawHealthBar);
     }
 
-    void ChangeHealth(float deltaHealth)
+    public void ChangeHealth(float deltaHealth)
     {
         playerData.healthPoints = Mathf.Clamp(playerData.healthPoints + deltaHealth, 0.0f, playerData.maxHealthPoints);
         if (healthChangedEvent != null)
@@ -32,7 +32,9 @@ public class HealthManager : MonoBehaviour
     {
         if (playerData.isAlive)
         {
+            playerData.soundManager.PlayHurt();
             playerData.animator.SetTrigger("Hurt");
+            _move.DamagedPush(new Vector3(transform.localScale.x,0,0));
             ChangeHealth(-damageValue);
             if (playerData.healthPoints == 0)
                 StartCoroutine(Death());
@@ -44,8 +46,9 @@ public class HealthManager : MonoBehaviour
         ChangeHealth(healValue); 
     }
 
-    IEnumerator Death()
+    public IEnumerator Death()
     {
+        playerData.soundManager.PlayDeath();
         playerData.isAlive = false;
         _move.loseControllEvent.Invoke();
         playerData.animator.SetBool("Run", false);
@@ -56,8 +59,9 @@ public class HealthManager : MonoBehaviour
         StartCoroutine(Recover());
     }
 
-    IEnumerator Recover()
+    public IEnumerator Recover()
     {
+        playerData.soundManager.PlayRecover();
         Heal(playerData.maxHealthPoints);
         _move.Respawn();
         playerData.animator.SetTrigger("Recover");

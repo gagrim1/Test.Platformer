@@ -6,5 +6,5 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public List<GameObject> checkpoints = new List<GameObject>();
-
+    public List<EnemyData> enemies = new List<EnemyData>();
 }
