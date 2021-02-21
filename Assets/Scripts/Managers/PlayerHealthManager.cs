@@ -32,6 +32,7 @@ public class PlayerHealthManager : MonoBehaviour, IHealthManager
     {
         if (playerData.isAlive)
         {
+            playerData.soundManager.PlayHurt();
             playerData.animator.SetTrigger("Hurt");
             _move.DamagedPush(new Vector3(transform.localScale.x,0,0));
             ChangeHealth(-damageValue);
@@ -47,7 +48,7 @@ public class PlayerHealthManager : MonoBehaviour, IHealthManager
 
     public IEnumerator Death()
     {
-        playerData.soundManager.playDeath();
+        playerData.soundManager.PlayDeath();
         playerData.isAlive = false;
         _move.loseControllEvent.Invoke();
         playerData.animator.SetBool("Run", false);
@@ -60,7 +61,7 @@ public class PlayerHealthManager : MonoBehaviour, IHealthManager
 
     public IEnumerator Recover()
     {
-        playerData.soundManager.playRecover();
+        playerData.soundManager.PlayRecover();
         Heal(playerData.maxHealthPoints);
         _move.Respawn();
         playerData.animator.SetTrigger("Recover");

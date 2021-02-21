@@ -17,10 +17,9 @@ public class AttackController : MonoBehaviour
         //play animation
         movement.StopMoving();
         movement.LoseControll();
-        playerData.soundManager.playAttack();
         playerData.animator.SetBool("Run",false);
         playerData.animator.SetTrigger("Attack");
-        playerData.soundManager.playAttack();
+        playerData.soundManager.PlayAttack();
         StartCoroutine(StayInAttack());
         StartCoroutine(DelayedAttack());
     }
@@ -43,8 +42,6 @@ public class AttackController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         //check enemys
         enemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        if(enemies.Length>0)
-            playerData.soundManager.playAtackEnemy();
         //hurt enemys
         foreach (Collider2D enemy in enemies)
         {

@@ -6,33 +6,35 @@ public class SoundManager : MonoBehaviour
 {
     public AudioSource recover;
     public AudioSource attack;
-    public AudioSource attackEnemy;
+    public AudioSource hurt;
+    public AudioSource getCoin;
+    public AudioSource airJump;
     public AudioSource run;
     public AudioSource jump;
     public AudioSource wallJump;
     public AudioSource death;
 
-    public void playAttack()
+    public void PlayAttack()
     {
         attack.Play();
     }
 
-    public void playJump()
+    public void PlayJump()
     {
         jump.Play();
     }
 
-    public void playWallJump()
+    public void PlayWallJump()
     {
         wallJump.Play();
     }
 
-    public void playDeath()
+    public void PlayDeath()
     {
         death.Play();
     }
 
-    public void startRun()
+    public void StartRun()
     {
         if (!run.isPlaying)
         {
@@ -40,22 +42,35 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void stopRun()
+    public void StopRun()
     {
         if (run.isPlaying)
         {
-            //Debug.Log("run");
             run.Stop();
         }
     }
 
-    public void playRecover()
+    public void PlayRecover()
     {
         recover.Play();
     }
-    public void playAtackEnemy()
+
+    public void PlayHurt()
     {
-        attack.Stop();
-        attackEnemy.Play();
+        hurt.Play();
+    }
+
+    public void PlayGetCoin() 
+    {
+        if (getCoin.isPlaying)
+            getCoin.pitch += 0.1f;
+        else
+            getCoin.pitch = 1f;
+        getCoin.PlayOneShot(getCoin.clip);
+    }
+    
+    public void PlayAirJump() 
+    {
+        airJump.Play();
     }
 }

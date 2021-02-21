@@ -20,6 +20,7 @@ public class ScoreManager : MonoBehaviour
     public void GetCoin()
     {
         playerData.coinScore++;
+        playerData.soundManager.PlayGetCoin();
         scoreChangedEvent.Invoke();
     }
 }

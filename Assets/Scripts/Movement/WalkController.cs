@@ -27,7 +27,7 @@ public class WalkController : MonoBehaviour
     {
         playerData.animator.SetBool("IsGrounded", playerData.isGrounded);
         if (!playerData.isGrounded)
-            playerData.soundManager.stopRun();
+            playerData.soundManager.StopRun();
     }
 
     public void Move(string direction) // мы вызовем этот метод с события, см. InputManager
@@ -43,7 +43,7 @@ public class WalkController : MonoBehaviour
             playerData.animator.SetBool("Run", true);
             if (playerData.isGrounded)
             {
-                playerData.soundManager.startRun();
+                playerData.soundManager.StartRun();
             }
         }
         else if (direction == "right")
@@ -53,14 +53,14 @@ public class WalkController : MonoBehaviour
             playerData.animator.SetBool("Run", true);
             if (playerData.isGrounded)
             {
-                playerData.soundManager.startRun();
+                playerData.soundManager.StartRun();
             }
         } 
         else 
         {
             playerData.rigidBody.velocity = new Vector2(0, playerData.rigidBody.velocity.y);
             playerData.animator.SetBool("Run", false);
-            playerData.soundManager.stopRun();
+            playerData.soundManager.StopRun();
         } 
     }
 }
