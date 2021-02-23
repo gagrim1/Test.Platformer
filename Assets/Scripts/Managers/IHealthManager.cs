@@ -10,5 +10,7 @@ public interface IHealthManager
 
     void Heal(float healValue);
 
+    void Kill();
+
     IEnumerator Death();
 }
