@@ -69,4 +69,9 @@ public class PlayerHealthManager : MonoBehaviour, IHealthManager
         playerData.isAlive = true;
         _move.getControllEvent.Invoke();
     }
+
+    public void Kill()
+    {
+        Damage(playerData.maxHealthPoints);
+    }
 }

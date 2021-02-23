@@ -73,4 +73,9 @@ public class DummyHeathManager : MonoBehaviour, IHealthManager
         //Debug.Log("Recover: "+animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Base Layer")).IsName("Recover"));
         return !animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Base Layer")).IsName("Recover");
     }
+
+    public void Kill()
+    {
+        Damage(maxHealth);
+    }
 }
