@@ -52,7 +52,7 @@ public class InputManager : MonoBehaviour
             //Debug.Log("Reloading...");
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.R))
         {
             attackInputEvent.Invoke();
         } 

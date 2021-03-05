@@ -17,19 +17,19 @@ MonoBehaviour:
   animator: {fileID: 0}
   rigidBody: {fileID: 0}
   boxCollider: {fileID: 0}
+  soundManager: {fileID: 0}
   maxHealthPoints: 100
-  healthPoints: 80
-  coinScore: 34
+  healthPoints: 100
+  coinScore: 10
   maxDashCount: 1
   dashCount: 0
   maxJumpCount: 1
   jumpCount: 0
   moveSpeed: 17
-  jumpSpeed: 30
+  jumpSpeed: 1500
   dashSpeed: 45
   dashTime: 0.15
   isAlive: 1
   isControlled: 1
   isGrounded: 1
-  pushSpeed: 15
-  scale: 2
+  pushSpeed: 1500

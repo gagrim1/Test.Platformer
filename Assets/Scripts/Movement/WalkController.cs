@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,11 +15,11 @@ public class WalkController : MonoBehaviour
         Vector2 charScale = transform.localScale;
         if (direction == "right")
         {
-            charScale.x = -playerData.scale;
+            charScale.x = -Math.Abs(charScale.x);
         }
         if (direction == "left")
         {
-            charScale.x = playerData.scale;
+            charScale.x = Math.Abs(charScale.x);
         }
         transform.localScale = charScale;
     }

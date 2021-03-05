@@ -26,5 +26,4 @@ public class PlayerData : ScriptableObject
     public bool isControlled;
     public bool isGrounded;
     public float pushSpeed;
-    public float scale;
 }

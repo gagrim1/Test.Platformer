@@ -18,7 +18,9 @@ public class JumpController : MonoBehaviour
                 playerData.soundManager.PlayJump();
             else
                 playerData.soundManager.PlayAirJump();
-            playerData.rigidBody.velocity = new Vector2(playerData.rigidBody.velocity.x, playerData.jumpSpeed);
+
+            playerData.rigidBody.velocity = new Vector2(playerData.rigidBody.velocity.x, 0);
+            playerData.rigidBody.AddForce(new Vector2(0, playerData.jumpSpeed));
             playerData.jumpCount++;
         }       
     }
