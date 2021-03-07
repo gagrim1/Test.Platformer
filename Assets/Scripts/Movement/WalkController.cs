@@ -37,31 +37,35 @@ public class WalkController : MonoBehaviour
         {
             return;
         }
-        if (direction == "left")
+
+        Vector3 velocity = Vector3.zero;
+        Vector3 targetVelocity = new Vector2(0f, playerData.rigidBody.velocity.y);
+
+        if (direction == "left" || direction == "right")
         {   
             Flip(direction);
-            playerData.rigidBody.velocity = new Vector2(-playerData.moveSpeed, playerData.rigidBody.velocity.y);
             playerData.animator.SetBool("Run", true);
             if (playerData.isGrounded)
             {
                 playerData.soundManager.StartRun();
+            }
+
+            if(direction == "left")
+            {
+                targetVelocity.x = -playerData.moveSpeed;
+            }
+            else
+            {
+                targetVelocity.x = playerData.moveSpeed;
             }
         }
-        else if (direction == "right")
-        {
-            Flip(direction);
-            playerData.rigidBody.velocity = new Vector2(+playerData.moveSpeed, playerData.rigidBody.velocity.y);
-            playerData.animator.SetBool("Run", true);
-            if (playerData.isGrounded)
-            {
-                playerData.soundManager.StartRun();
-            }
-        } 
         else 
         {
-            playerData.rigidBody.velocity = new Vector2(0, playerData.rigidBody.velocity.y);
+            
             playerData.animator.SetBool("Run", false);
             playerData.soundManager.StopRun();
         } 
+        playerData.rigidBody.velocity = Vector3.SmoothDamp(playerData.rigidBody.velocity, targetVelocity, ref velocity, 0.001f);
+
     }
 }
