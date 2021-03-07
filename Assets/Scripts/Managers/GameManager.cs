@@ -10,12 +10,13 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        AddFirstCheckpoint();
         CreatePlayer();
+        Debug.Log("GameManager Awake was called!");
     }
 
     void CreatePlayer()
     {
-        AddFirstCheckpoint();
         player = Instantiate(gameData.playerData.prefab, gameData.levelData.checkpoints[0].transform.position, Quaternion.identity, transform);
         gameData.playerData.animator = player.GetComponent<Animator>();
         gameData.playerData.rigidBody = player.GetComponent<Rigidbody2D>();
@@ -30,12 +31,24 @@ public class GameManager : MonoBehaviour
 
     void AddFirstCheckpoint()
     {
-        gameData.levelData.checkpoints.Add(firstCheckpoint);
+        if (gameData.levelData.checkpoints.Count == 0)
+        {
+            gameData.levelData.checkpoints.Add(firstCheckpoint);
+        }
+        else
+        {
+            gameData.levelData.checkpoints[0] = firstCheckpoint;
+        }
     }
 
     void CleanCheckpoints()
     {
         //GameObject firstCheckpoint = gameData.levelData.checkpoints[0];
         gameData.levelData.checkpoints.Clear();
+    }
+
+    public GameObject GetPlayer()
+    {
+        return player;
     }
 }

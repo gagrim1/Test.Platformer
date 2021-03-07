@@ -13,11 +13,29 @@ public class CheckpointManager : MonoBehaviour
             return ;
         }
         AddCheckpoint(gameObject);
+        Debug.Log("Checkpoints count: " + gameData.levelData.checkpoints.Count.ToString());
     }
 
-    public void AddCheckpoint(GameObject checkpoint){
-        if(!gameData.levelData.checkpoints.Contains(checkpoint)){
-            gameData.levelData.checkpoints.Add(checkpoint);
+    public void AddCheckpoint(GameObject checkpoint) {
+        if(!gameData.levelData.checkpoints.Contains(checkpoint))
+        {
+            try
+            {
+                for (int i = 1; i <= gameData.levelData.checkpoints.Count; i++)
+                {
+                    if (gameData.levelData.checkpoints[i] == null)
+                    {
+                        gameData.levelData.checkpoints[i] = checkpoint;
+                        break;
+                    }
+                }
+                
+            }
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                Debug.Log("Exception: " + e);
+                gameData.levelData.checkpoints.Add(checkpoint);
+            }
         }
     }
 }

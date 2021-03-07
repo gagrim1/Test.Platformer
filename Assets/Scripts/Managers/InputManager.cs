@@ -52,66 +52,70 @@ public class InputManager : MonoBehaviour
             //Debug.Log("Reloading...");
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Time.timeScale > 0)
         {
-            attackInputEvent.Invoke();
-        } 
-
-        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && xAxisInputEvent != null)
-        {
-            if (dir != Dir.Left)
+            if (Input.GetMouseButtonDown(0))
             {
-                dir = Dir.Left;
-                xAxisInputEvent.Invoke("left"); 
-            }              
-        }
-        if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && xAxisInputEvent != null)
-        {
-            if (dir != Dir.Right)
-            {
-                dir = Dir.Right;
-                xAxisInputEvent.Invoke("right"); 
-            }           
-        }
-        if ((   !Input.GetKey(KeyCode.D) 
-            && !Input.GetKey(KeyCode.RightArrow) 
-            && !Input.GetKey(KeyCode.A) 
-            && !Input.GetKey(KeyCode.LeftArrow)) 
-            || xAxisInputEvent == null)
-        {
-            if (dir != Dir.None)
-            {
-                dir = Dir.None;
-                xAxisInputEvent.Invoke("none"); 
-            } 
-        }
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && jumpInputEvent != null)
-        {
-            jumpInputEvent.Invoke();
-        }
-        if((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) && fallDawnInputEvent != null)
-        {
-            fallDawnInputEvent.Invoke();
-        }
-        if (Input.GetKeyDown(KeyCode.E) && dashInputEvent != null)
-        {
-            dashInputEvent.Invoke("right");
-        }
-        if (Input.GetKeyDown(KeyCode.Q) && dashInputEvent != null)
-        {
-            dashInputEvent.Invoke("left");
-        }
+                attackInputEvent.Invoke();
+            }
 
-        // TEST: delete after testing
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            gameManager.player.GetComponent<IHealthManager>().Damage(10);
-        }
+            if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && xAxisInputEvent != null)
+            {
+                if (dir != Dir.Left)
+                {
+                    dir = Dir.Left;
+                    xAxisInputEvent.Invoke("left");
+                }
+            }
+            if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && xAxisInputEvent != null)
+            {
+                if (dir != Dir.Right)
+                {
+                    dir = Dir.Right;
+                    xAxisInputEvent.Invoke("right");
+                }
+            }
+            if ((!Input.GetKey(KeyCode.D)
+                && !Input.GetKey(KeyCode.RightArrow)
+                && !Input.GetKey(KeyCode.A)
+                && !Input.GetKey(KeyCode.LeftArrow))
+                || xAxisInputEvent == null)
+            {
+                if (dir != Dir.None)
+                {
+                    dir = Dir.None;
+                    xAxisInputEvent.Invoke("none");
+                }
+            }
+            if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && jumpInputEvent != null)
+            {
+                jumpInputEvent.Invoke();
+            }
+            if ((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) && fallDawnInputEvent != null)
+            {
+                fallDawnInputEvent.Invoke();
+            }
+            if (Input.GetKeyDown(KeyCode.E) && dashInputEvent != null)
+            {
+                dashInputEvent.Invoke("right");
+            }
+            if (Input.GetKeyDown(KeyCode.Q) && dashInputEvent != null)
+            {
+                dashInputEvent.Invoke("left");
+            }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            gameManager.player.GetComponent<IHealthManager>().Heal(7);
+            // TEST: delete after testing
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                gameManager.player.GetComponent<IHealthManager>().Damage(10);
+            }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                gameManager.player.GetComponent<IHealthManager>().Heal(7);
+            }
         }
+        
     }
 
     IEnumerator ReloadingTimer()
