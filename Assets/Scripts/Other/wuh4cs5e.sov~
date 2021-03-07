@@ -1,0 +1,37 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CheckpointManager : MonoBehaviour
+{
+    public GameData gameData;
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag != "Player")
+        {
+            return ;
+        }
+        AddCheckpoint(gameObject, gameData.levelData.checkpoints);
+        Debug.Log("Checkpoints count: " + gameData.levelData.checkpoints.Count.ToString());
+    }
+
+    public void AddCheckpoint(GameObject checkpoint, List<GameObject> checkpoints){
+        if(!gameData.levelData.checkpoints.Contains(checkpoint))
+        {
+            //gameData.levelData.checkpoints.Add(checkpoint);
+            for (int i = 1; i <= gameData.levelData.checkpoints.Count; i++)
+            {
+                try
+                {
+                    gameData.levelData.checkpoints[i] = checkpoint;
+                } 
+                catch (System.ArgumentOutOfRangeException e)
+                {
+                    gameData.levelData.checkpoints.Add(checkpoint);
+                }
+                
+            }
+        }
+    }
+}
