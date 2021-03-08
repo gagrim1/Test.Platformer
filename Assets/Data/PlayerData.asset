@@ -19,21 +19,21 @@ MonoBehaviour:
   boxCollider: {fileID: 0}
   soundManager: {fileID: 0}
   maxHealthPoints: 100
-  healthPoints: 0
-  coinScore: 37
+  healthPoints: 100
+  coinScore: 10
   maxDashCount: 1
   dashCount: 0
   maxJumpCount: 1
   jumpCount: 0
   moveSpeed: 17
-  jumpSpeed: 30
+  jumpSpeed: 1500
   dashSpeed: 45
   dashTime: 0.15
   isAlive: 0
   isControlled: 0
   isGrounded: 1
   isOnWall: 0
-  pushSpeed: 15
+  pushSpeed: 1500
   scale: 2
   maxFallVelocityUsual: -40
   maxFallVelocity: -40

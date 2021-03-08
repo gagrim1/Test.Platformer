@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour
         if (attackInputEvent == null) attackInputEvent = new UnityEvent();
         attackInputEvent.AddListener(gameManager.player.GetComponent<AttackController>().Attack);
 
-        dir = Dir.None;  
+        dir = Dir.None;
         reloading = true;      
     }
     
@@ -52,8 +52,8 @@ public class InputManager : MonoBehaviour
             ReloadDir();
             //Debug.Log("Reloading...");
         }
-
-        if (Input.GetMouseButtonDown(0))
+        
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.R))
         {
             attackInputEvent.Invoke();
         } 
@@ -121,5 +121,4 @@ public class InputManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         reloading = true;
     }
-
 }

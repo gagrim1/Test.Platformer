@@ -37,6 +37,7 @@ public class MovementManager : MonoBehaviour
 
         playerData.isGrounded = true;
         playerData.isControlled = true;
+        playerData.isPushed = false;
 
         if(groundedEvent == null) groundedEvent = new  UnityEvent();
         groundedEvent.AddListener(_walk.ChangeGroundedStatus);
@@ -84,7 +85,7 @@ public class MovementManager : MonoBehaviour
         if(playerData.isAlive)
             playerData.isControlled = true;
         else
-            playerData.rigidBody.velocity = new Vector2(0, playerData.rigidBody.velocity.y);
+            StopMoving();
         level.GetComponent<InputManager>().ReloadDir();
     }
 
@@ -121,17 +122,13 @@ public class MovementManager : MonoBehaviour
         {
             return;
         }
-        Vector2 pushDirection = 2 * Vector2.up;
-        if(from.x < transform.position.x)
-        {
-            pushDirection += Vector2.right;
-        }
-        else
-        {
-            pushDirection += Vector2.left;
-        }
-        StartCoroutine(StayInFall(0.5f));
-        playerData.rigidBody.velocity = pushDirection * playerData.pushSpeed; 
+        Vector2 pushDirection = new Vector2(transform.localScale.x, 2.0f);
+        pushDirection.Normalize();
+        //StartCoroutine(StayInFall(0.2f));
+        StartCoroutine(StayInPush());
+        playerData.rigidBody.velocity = new Vector2(0f, 0f);
+        playerData.rigidBody.AddForce(pushDirection * playerData.pushSpeed);
+        
     }
 
     public void Respawn()
@@ -146,6 +143,36 @@ public class MovementManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         getControllEvent.Invoke();      
     }
+    bool IsDontStop()
+    {
+        return playerData.isGrounded || !playerData.isPushed;
+    }
 
-    
+    IEnumerator StayInPush()
+    {
+        playerData.isPushed = true;
+        yield return new WaitUntil(IsDontStop);
+        playerData.isPushed = false;    
+    }
+
+    public bool IsWallJump()
+    {
+        RaycastHit2D hit = Physics2D.BoxCast(playerData.boxCollider.bounds.center, playerData.boxCollider.bounds.size+Vector3.right*0.1f, 0f, Vector2.zero, 0f, wallMask);
+        if (hit.collider != null)
+            if (prevWall != hit.collider.gameObject && !playerData.isGrounded)
+            {
+                playerData.soundManager.PlayWallJump();
+                playerData.rigidBody.velocity = new Vector2(0f, 0f);
+                Vector2 jumpDir = new Vector2(transform.localScale.x, 1f);
+                playerData.rigidBody.AddForce(jumpDir * playerData.jumpSpeed*1);
+                prevWall = hit.collider.gameObject;
+                StartCoroutine(StayInPush());
+
+            }
+            else
+            {
+                return false;
+            }
+        return hit.collider != null;
+    }
 }

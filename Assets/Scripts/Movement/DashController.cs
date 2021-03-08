@@ -14,9 +14,9 @@ public class DashController : MonoBehaviour
 
         switch (dir)
         {
-            case "right": direction = 1;
+            case "right": 
+                direction = 1;
                 break;
-
             case "left":
                 direction = -1;
                 break;
@@ -24,7 +24,7 @@ public class DashController : MonoBehaviour
                 direction = 1;
                 break;
         }
-        bool canDash = playerData.dashCount < playerData.maxDashCount && playerData.isControlled;
+        bool canDash = (playerData.dashCount < playerData.maxDashCount) && playerData.isControlled;
         if(canDash)
         {
             _move._walk.Flip(dir);
@@ -43,6 +43,7 @@ public class DashController : MonoBehaviour
         yield return new WaitForSeconds(playerData.dashTime);
         playerData.animator.SetBool("Dash", false);
         playerData.rigidBody.gravityScale = gravity;
-        _move.getControllEvent.Invoke(); 
+        _move.getControllEvent.Invoke();
+        playerData.rigidBody.velocity = new Vector2(0f, playerData.rigidBody.velocity.y);
     }
 }
