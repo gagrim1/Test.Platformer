@@ -24,6 +24,7 @@ public class PlayerData : ScriptableObject
     public float dashTime;
     public bool isAlive;
     public bool isControlled;
+    public bool isPushed;
     public bool isGrounded;
     public float pushSpeed;
 }

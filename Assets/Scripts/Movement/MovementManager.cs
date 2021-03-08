@@ -36,6 +36,7 @@ public class MovementManager : MonoBehaviour
 
         playerData.isGrounded = true;
         playerData.isControlled = true;
+        playerData.isPushed = false;
 
         if(groundedEvent == null) groundedEvent = new  UnityEvent();
         groundedEvent.AddListener(_walk.ChangeGroundedStatus);
@@ -118,9 +119,11 @@ public class MovementManager : MonoBehaviour
         }
         Vector2 pushDirection = new Vector2(transform.localScale.x, 2.0f);
         pushDirection.Normalize();
-        StartCoroutine(StayInFall(0.2f));
+        //StartCoroutine(StayInFall(0.2f));
+        StartCoroutine(StayInPush());
         playerData.rigidBody.velocity = new Vector2(0f, 0f);
         playerData.rigidBody.AddForce(pushDirection * playerData.pushSpeed);
+        
     }
 
     public void Respawn()
@@ -136,6 +139,18 @@ public class MovementManager : MonoBehaviour
         getControllEvent.Invoke();      
     }
 
+    bool IsDontStop()
+    {
+        return playerData.isGrounded || !playerData.isPushed;
+    }
+
+    IEnumerator StayInPush()
+    {
+        playerData.isPushed = true;
+        yield return new WaitUntil(IsDontStop);
+        playerData.isPushed = false;    
+    }
+
     public bool IsWallJump()
     {
         RaycastHit2D hit = Physics2D.BoxCast(playerData.boxCollider.bounds.center, playerData.boxCollider.bounds.size+Vector3.right*0.1f, 0f, Vector2.zero, 0f, wallMask);
@@ -147,6 +162,8 @@ public class MovementManager : MonoBehaviour
                 Vector2 jumpDir = new Vector2(transform.localScale.x, 1f);
                 playerData.rigidBody.AddForce(jumpDir * playerData.jumpSpeed*1);
                 prevWall = hit.collider.gameObject;
+                StartCoroutine(StayInPush());
+
             }
             else
             {

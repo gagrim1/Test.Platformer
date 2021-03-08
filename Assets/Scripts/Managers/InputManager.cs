@@ -14,7 +14,8 @@ public class InputManager : MonoBehaviour
 
     public enum Dir {Left, Right, None, Reload};
     public Dir dir;
-    
+    public bool reloading;
+
     void Start()
     {
         gameManager = transform.gameObject.GetComponent<GameManager>();
@@ -34,7 +35,8 @@ public class InputManager : MonoBehaviour
         if (attackInputEvent == null) attackInputEvent = new UnityEvent();
         attackInputEvent.AddListener(gameManager.player.GetComponent<AttackController>().Attack);
 
-        dir = Dir.None;     
+        dir = Dir.None;
+        reloading = true;      
     }
     
     public void ReloadDir()
@@ -44,6 +46,12 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+        if(reloading){
+            StartCoroutine(ReloadingTimer());
+            ReloadDir();
+            //Debug.Log("Reloading...");
+        }
+        
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.R))
         {
             attackInputEvent.Invoke();
@@ -104,5 +112,12 @@ public class InputManager : MonoBehaviour
         {
             gameManager.player.GetComponent<IHealthManager>().Heal(7);
         }
+    }
+
+    IEnumerator ReloadingTimer()
+    {   
+        reloading = false;
+        yield return new WaitForSeconds(0.1f);
+        reloading = true;
     }
 }
