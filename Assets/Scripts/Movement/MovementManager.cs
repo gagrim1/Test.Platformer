@@ -7,18 +7,18 @@ public class MovementManager : MonoBehaviour
 {
     public PlayerData playerData;
     public LevelData levelData;
-    public string prevWall;
     public LayerMask platformMask;
-    public LayerMask wallMask;
 
     public WalkController _walk;
     public JumpController _jump;
     public DashController _dash;
     public FallDawnController _fallDawn;
+    public WallJumpController _wallJump;
 
     public UnityEvent groundedEvent;
     public UnityEvent getControllEvent;
     public UnityEvent loseControllEvent;
+    public UnityEvent wallJumpEvent;
 
     public GameObject level;
 
@@ -28,12 +28,12 @@ public class MovementManager : MonoBehaviour
     {
         level = transform.parent.gameObject;
         levelData = level.GetComponent<GameManager>().gameData.levelData;
-        prevWall = "";
         _walk.playerData = playerData;
         _walk._move = _jump._move = _dash._move = _fallDawn._move = gameObject.GetComponent<MovementManager>();
         _jump.playerData = playerData;
         _dash.playerData = playerData;
         _fallDawn.playerData = playerData;
+        _wallJump.playerData = playerData;
 
         playerData.isGrounded = true;
         playerData.isControlled = true;
@@ -44,6 +44,8 @@ public class MovementManager : MonoBehaviour
         getControllEvent.AddListener(GetControll);
         if(loseControllEvent == null) loseControllEvent = new  UnityEvent();
         loseControllEvent.AddListener(LoseControll);
+        if (wallJumpEvent == null) wallJumpEvent = new UnityEvent();
+        wallJumpEvent.AddListener(GetComponent<WallJumpController>().WallJump);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -94,13 +96,15 @@ public class MovementManager : MonoBehaviour
             playerData.isGrounded = newIsGrounded;
             groundedEvent.Invoke();
         }
-        if(playerData.isGrounded)
+        if (playerData.isGrounded)
         {
-            prevWall = null;
             playerData.jumpCount = 0;
             playerData.dashCount = 0;
         }
-        IsWallJump();
+        wallJumpEvent.Invoke();
+            playerData.rigidBody.velocity = new Vector2(playerData.rigidBody.velocity.x, 
+                Mathf.Clamp(playerData.rigidBody.velocity.y, playerData.maxFallVelocity, 100f));
+
     }
 
     public bool IsGrounded()
@@ -143,20 +147,5 @@ public class MovementManager : MonoBehaviour
         getControllEvent.Invoke();      
     }
 
-    public bool IsWallJump()
-    {
-        RaycastHit2D hit = Physics2D.BoxCast(playerData.boxCollider.bounds.center, playerData.boxCollider.bounds.size+Vector3.right*0.1f, 0f, Vector2.zero, 0f, wallMask);
-        if (hit.collider != null)
-            if (prevWall != hit.collider.gameObject.name && !playerData.isGrounded)
-            {
-                playerData.soundManager.PlayWallJump();
-                playerData.rigidBody.velocity = Vector2.up * playerData.jumpSpeed*1;// + Vector2.left * playerData.jumpSpeed / 2;
-                prevWall = hit.collider.gameObject.name;
-            }
-            else
-            {
-                return false;
-            }
-        return hit.collider != null;
-    }
+    
 }

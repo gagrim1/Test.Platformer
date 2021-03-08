@@ -25,6 +25,10 @@ public class PlayerData : ScriptableObject
     public bool isAlive;
     public bool isControlled;
     public bool isGrounded;
+    public bool isOnWall;
     public float pushSpeed;
     public float scale;
+    public float maxFallVelocityUsual;
+    public float maxFallVelocity;
+    public float maxFallVelocityOnWall;
 }

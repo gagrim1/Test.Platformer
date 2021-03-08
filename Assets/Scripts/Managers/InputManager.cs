@@ -25,6 +25,7 @@ public class InputManager : MonoBehaviour
 
         if (jumpInputEvent == null) jumpInputEvent = new UnityEvent();
         jumpInputEvent.AddListener(gameManager.player.GetComponent<JumpController>().Jump);
+        jumpInputEvent.AddListener(gameManager.player.GetComponent<WallJumpController>().Jump);
 
         if (dashInputEvent == null) dashInputEvent = new UnityEvent<string>();
         dashInputEvent.AddListener(gameManager.player.GetComponent<DashController>().Dash);

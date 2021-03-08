@@ -874,6 +874,7 @@ GameObject:
   - component: {fileID: 2866059673849856819}
   - component: {fileID: 1706644598638644788}
   - component: {fileID: 5938270508831200257}
+  - component: {fileID: 5182947783855491252}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -1028,17 +1029,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 0e49cf848a5c624468d874e0519e3f9d, type: 2}
   levelData: {fileID: 0}
-  prevWall: 
   platformMask:
     serializedVersion: 2
     m_Bits: 6400
-  wallMask:
-    serializedVersion: 2
-    m_Bits: 512
   _walk: {fileID: -2476761272941271226}
   _jump: {fileID: -1560769528196954283}
   _dash: {fileID: 3158375920369886271}
   _fallDawn: {fileID: 5938270508831200257}
+  _wallJump: {fileID: 5182947783855491252}
   groundedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1046,6 +1044,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   loseControllEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  wallJumpEvent:
     m_PersistentCalls:
       m_Calls: []
   level: {fileID: 0}
@@ -1153,6 +1154,22 @@ MonoBehaviour:
   playerData: {fileID: 0}
   _move: {fileID: 0}
   localGroupColliders: []
+--- !u!114 &5182947783855491252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4670505058319695067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab05cf6353decd438cc9191653681ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 0e49cf848a5c624468d874e0519e3f9d, type: 2}
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &4846644210975171527
 GameObject:
   m_ObjectHideFlags: 0

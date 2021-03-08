@@ -17,9 +17,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   rigidBody: {fileID: 0}
   boxCollider: {fileID: 0}
+  soundManager: {fileID: 0}
   maxHealthPoints: 100
-  healthPoints: 80
-  coinScore: 34
+  healthPoints: 0
+  coinScore: 37
   maxDashCount: 1
   dashCount: 0
   maxJumpCount: 1
@@ -28,8 +29,12 @@ MonoBehaviour:
   jumpSpeed: 30
   dashSpeed: 45
   dashTime: 0.15
-  isAlive: 1
-  isControlled: 1
+  isAlive: 0
+  isControlled: 0
   isGrounded: 1
+  isOnWall: 0
   pushSpeed: 15
   scale: 2
+  maxFallVelocityUsual: -40
+  maxFallVelocity: -40
+  maxFallVelocityOnWall: -2

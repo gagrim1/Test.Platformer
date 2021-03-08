@@ -32,10 +32,11 @@ public class WalkController : MonoBehaviour
 
     public void Move(string direction) // мы вызовем этот метод с события, см. InputManager
     {
-        if(!playerData.isControlled)
-        {
-            return;
-        }
+        if (playerData != null)
+            if (!playerData.isControlled || playerData.isOnWall)
+            {
+                return;
+            }
         if (direction == "left")
         {   
             Flip(direction);

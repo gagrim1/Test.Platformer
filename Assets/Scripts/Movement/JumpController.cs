@@ -11,7 +11,7 @@ public class JumpController : MonoBehaviour
 
     public void Jump() // мы вызовем этот метод с события, см. InputManager
     {
-        bool canJump = playerData.jumpCount < playerData.maxJumpCount && !_move.IsWallJump() && playerData.isControlled;  
+        bool canJump = (playerData.jumpCount < playerData.maxJumpCount) && !playerData.isOnWall && playerData.isControlled;  
         if (canJump)
         {
             if (playerData.isGrounded)
