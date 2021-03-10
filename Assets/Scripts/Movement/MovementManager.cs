@@ -29,7 +29,7 @@ public class MovementManager : MonoBehaviour
         level = transform.parent.gameObject;
         levelData = level.GetComponent<GameManager>().gameData.levelData;
         _walk.playerData = playerData;
-        _walk._move = _jump._move = _dash._move = _fallDawn._move = gameObject.GetComponent<MovementManager>();
+        _walk._move = _jump._move = _dash._move = _fallDawn._move = _wallJump.move = gameObject.GetComponent<MovementManager>();
         _jump.playerData = playerData;
         _dash.playerData = playerData;
         _fallDawn.playerData = playerData;
@@ -148,31 +148,10 @@ public class MovementManager : MonoBehaviour
         return playerData.isGrounded || !playerData.isPushed;
     }
 
-    IEnumerator StayInPush()
+    public IEnumerator StayInPush()
     {
         playerData.isPushed = true;
         yield return new WaitUntil(IsDontStop);
         playerData.isPushed = false;    
-    }
-
-    public bool IsWallJump()
-    {
-        RaycastHit2D hit = Physics2D.BoxCast(playerData.boxCollider.bounds.center, playerData.boxCollider.bounds.size+Vector3.right*0.1f, 0f, Vector2.zero, 0f, wallMask);
-        if (hit.collider != null)
-            if (prevWall != hit.collider.gameObject && !playerData.isGrounded)
-            {
-                playerData.soundManager.PlayWallJump();
-                playerData.rigidBody.velocity = new Vector2(0f, 0f);
-                Vector2 jumpDir = new Vector2(transform.localScale.x, 1f);
-                playerData.rigidBody.AddForce(jumpDir * playerData.jumpSpeed*1);
-                prevWall = hit.collider.gameObject;
-                StartCoroutine(StayInPush());
-
-            }
-            else
-            {
-                return false;
-            }
-        return hit.collider != null;
     }
 }

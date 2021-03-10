@@ -7,6 +7,7 @@ public class WallJumpController : MonoBehaviour
 {
     [HideInInspector]
     public PlayerData playerData;
+    public MovementManager move;
     private Collider2D prevWall=null;
     public LayerMask wallMask;
     private Vector2 coonectToWallDist = new Vector2(0.2f, 0f);
@@ -24,12 +25,7 @@ public class WallJumpController : MonoBehaviour
 
     public void CheckWallJump()
     {
-        //playerData.isOnWall = false;
-        //RaycastHit2D hit = Physics2D.BoxCast(playerData.boxCollider.bounds.center, playerData.boxCollider.bounds.size + Vector3.right * 0.1f, 0f, Vector2.zero, 0f, wallMask);
-        Collider2D[] walls = Physics2D.OverlapBoxAll(transform.position +
-                new Vector3(playerData.boxCollider.offset.x * transform.localScale.x,
-                playerData.boxCollider.offset.y * transform.localScale.y),
-                (playerData.boxCollider.size + coonectToWallDist) * 2, 0f, wallMask);
+        Collider2D[] walls = Physics2D.OverlapBoxAll(GetWallJumpCheckBoxPos(), GetWallJumpCheckBoxSize(), 0f, wallMask);
         if (walls.Length == 0) {
             playerData.isOnWall = false;
             prevWall = null;
@@ -38,36 +34,33 @@ public class WallJumpController : MonoBehaviour
 
         if (!walls.Contains(prevWall))
         {
-            Debug.Log("jump");
             playerData.isOnWall = true;
+            playerData.isPushed = false;
+            if (transform.position.x < walls[0].transform.position.x)
+                move._walk.Flip("right");
+            else
+                move._walk.Flip("left");
             StartCoroutine(StayOnWall());
             prevWall = walls[0];
-            //StartCoroutine(StayOnWall());
+
         }
-        /*if (prevWall != hit.collider)
-        {
-            playerData.isOnWall = true;
-            prevWall = hit.collider;
-            Jump();
-        }
-        else
-        {
-            return false;
-        }*/
-        /*else
-        {
-            prevWall = null;
-        }*/
-        //return hit.collider != null;
     }
 
     public void Jump()
     {
         if (!playerData.isOnWall) return;
 
+        //StartCoroutine(move.StayInPush());
         playerData.isOnWall = false;
         playerData.soundManager.PlayWallJump();
-        playerData.rigidBody.velocity = Vector2.up * playerData.jumpSpeed * 1;// + Vector2.left * playerData.jumpSpeed / 2;
+        playerData.rigidBody.velocity = new Vector2(0f, 0f);
+        if (transform.localScale.x > 0)
+            move._walk.Flip("right");
+        else
+            move._walk.Flip("left");
+        Vector2 jumpDir = new Vector2(0, 2f).normalized;
+        playerData.rigidBody.AddForce(jumpDir * playerData.jumpSpeed);
+        //playerData.rigidBody.velocity = Vector2.up * playerData.jumpSpeed * 1;// + Vector2.left * playerData.jumpSpeed / 2;
     }
 
     IEnumerator StayOnWall()
@@ -85,10 +78,21 @@ public class WallJumpController : MonoBehaviour
     {
         if (playerData != null && playerData.boxCollider != null)
         {
-            Gizmos.DrawWireCube(transform.position +
-                new Vector3(playerData.boxCollider.offset.x * transform.localScale.x,
-                playerData.boxCollider.offset.y * transform.localScale.y),
-                (playerData.boxCollider.size + coonectToWallDist) * 2);
+            Gizmos.DrawWireCube(GetWallJumpCheckBoxPos(), GetWallJumpCheckBoxSize());
         }
+    }
+
+    private Vector3 GetWallJumpCheckBoxPos() 
+    {
+        return transform.position +
+                new Vector3(playerData.boxCollider.offset.x * 
+                transform.localScale.x,
+                playerData.boxCollider.offset.y * 
+                transform.localScale.y);
+    }
+
+    private Vector2 GetWallJumpCheckBoxSize()
+    {
+        return (new Vector2(playerData.boxCollider.size.x, playerData.boxCollider.size.y/2) + coonectToWallDist) * transform.localScale.y;
     }
 }

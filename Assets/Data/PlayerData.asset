@@ -20,7 +20,7 @@ MonoBehaviour:
   soundManager: {fileID: 0}
   maxHealthPoints: 100
   healthPoints: 100
-  coinScore: 10
+  coinScore: 14
   maxDashCount: 1
   dashCount: 0
   maxJumpCount: 1
@@ -29,12 +29,12 @@ MonoBehaviour:
   jumpSpeed: 1500
   dashSpeed: 45
   dashTime: 0.15
-  isAlive: 0
-  isControlled: 0
+  isAlive: 1
+  isControlled: 1
+  isPushed: 0
   isGrounded: 1
   isOnWall: 0
   pushSpeed: 1500
-  scale: 2
-  maxFallVelocityUsual: -40
-  maxFallVelocity: -40
-  maxFallVelocityOnWall: -2
+  maxFallVelocityUsual: -80
+  maxFallVelocity: -80
+  maxFallVelocityOnWall: -7
