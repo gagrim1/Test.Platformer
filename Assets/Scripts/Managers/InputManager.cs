@@ -31,7 +31,8 @@ public class InputManager : MonoBehaviour
         dashInputEvent.AddListener(gameManager.player.GetComponent<DashController>().Dash);
 
         if (fallDawnInputEvent == null) fallDawnInputEvent = new UnityEvent();
-        fallDawnInputEvent.AddListener(gameManager.player.GetComponent<FallDawnController>().FallDawn);
+        fallDawnInputEvent.AddListener(gameManager.player.GetComponent<FallDawnController>().FallDown);
+        fallDawnInputEvent.AddListener(gameManager.player.GetComponent<WallJumpController>().Fall);
 
         if (attackInputEvent == null) attackInputEvent = new UnityEvent();
         attackInputEvent.AddListener(gameManager.player.GetComponent<AttackController>().Attack);

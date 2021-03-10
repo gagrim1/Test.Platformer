@@ -50,7 +50,6 @@ public class WallJumpController : MonoBehaviour
     {
         if (!playerData.isOnWall) return;
 
-        //StartCoroutine(move.StayInPush());
         playerData.isOnWall = false;
         playerData.soundManager.PlayWallJump();
         playerData.rigidBody.velocity = new Vector2(0f, 0f);
@@ -60,7 +59,13 @@ public class WallJumpController : MonoBehaviour
             move._walk.Flip("left");
         Vector2 jumpDir = new Vector2(0, 2f).normalized;
         playerData.rigidBody.AddForce(jumpDir * playerData.jumpSpeed);
-        //playerData.rigidBody.velocity = Vector2.up * playerData.jumpSpeed * 1;// + Vector2.left * playerData.jumpSpeed / 2;
+    }
+
+    public void Fall()
+    {
+        if (!playerData.isOnWall) return;
+
+        playerData.isOnWall = false;
     }
 
     IEnumerator StayOnWall()

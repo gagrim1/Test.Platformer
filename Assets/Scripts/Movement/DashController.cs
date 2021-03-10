@@ -11,7 +11,9 @@ public class DashController : MonoBehaviour
     private int direction;
     public void Dash(string dir) // мы вызовем этот метод с события, см. InputManager
     {
+        if (!playerData.isControlled) return;
 
+        playerData.isPushed = false;
         switch (dir)
         {
             case "right": 

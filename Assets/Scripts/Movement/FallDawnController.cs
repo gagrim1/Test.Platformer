@@ -9,9 +9,10 @@ public class FallDawnController : MonoBehaviour
     [HideInInspector]
     public MovementManager _move;
     public Collider2D[] localGroupColliders;
-    public void FallDawn()
+    public void FallDown()
     {
-        if (playerData.isGrounded)
+        if (!playerData.isControlled) return;
+        if (playerData.isGrounded && !playerData.isOnWall)
         {
             StartCoroutine(jumpDown());
         }
@@ -27,7 +28,7 @@ public class FallDawnController : MonoBehaviour
                 collider.GetComponent<PlatformEffector2D>().colliderMask -= (int) Mathf.Pow(2,LayerMask.NameToLayer("Player"));
             }
         }
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.2f);
         foreach (Collider2D collider in localGroupColliders)
         {
             if (collider.gameObject.layer == LayerMask.NameToLayer("OneWayPlatform")
